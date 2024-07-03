@@ -28,11 +28,12 @@ function ProductTable({ products, filterText, inStockOnly }) {
   let lastCategory = null;
 
   products.forEach((product) => {
-    if (product.name.toLowerCase().indexOf(filterText.toLowerCase())) {
+    if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       return;
     }
 
     console.log(product.name.toLowerCase().indexOf(filterText.toLowerCase()));
+    console.log(inStockOnly && !product.stocked);
 
     if (inStockOnly && !product.stocked) {
       return;
@@ -95,7 +96,7 @@ function FilterableProductTable({ products }) {
   const [inStockOnly, setInStockOnly] = useState(false);
 
   return (
-    <div>
+    <div style={{ margin: "30px" }}>
       <SearchBar
         onFilterTextChange={setFilterText}
         onInStockOnlyChange={setInStockOnly}
@@ -113,8 +114,10 @@ function FilterableProductTable({ products }) {
 
 const PRODUCTS = [
   { category: "Fruits", price: "$1", stocked: true, name: "Apple" },
-  { category: "Fruits", price: "$1", stocked: true, name: "Dragonfruit" },
-  { category: "Fruits", price: "$2", stocked: false, name: "Passionfruit" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Pomegranate" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Pear" },
+  { category: "Fruits", price: "$1", stocked: true, name: "Banana" },
+  { category: "Fruits", price: "$2", stocked: false, name: "Watermelon" },
   { category: "Vegetables", price: "$2", stocked: true, name: "Spinach" },
   { category: "Vegetables", price: "$4", stocked: false, name: "Pumpkin" },
   { category: "Vegetables", price: "$1", stocked: true, name: "Peas" },
