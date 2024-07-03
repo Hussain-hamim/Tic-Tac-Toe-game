@@ -4,11 +4,13 @@ import "./index.css";
 import reportWebVitals from "./reportWebVitals";
 import ReactDev from "./ReactDev";
 import "bootstrap/dist/css/bootstrap.css";
+import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
-    <ReactDev />
+    {/* <ReactDev /> */}
+    <App />
   </React.StrictMode>
 );
 
