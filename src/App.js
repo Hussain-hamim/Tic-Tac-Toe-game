@@ -25,20 +25,33 @@ function ProductRow({ product }) {
 
 function ProductTable({ products, filterText, inStockOnly }) {
   const rows = [];
+  /** lastCategory: this variable keep track of the category of the
+   last processed product to determine when
+   to insert a new category row */
   let lastCategory = null;
 
   products.forEach((product) => {
+    /** if the product's name does not contain the filterText,
+     * its skipped and the loop move to the next product
+     */
     if (product.name.toLowerCase().indexOf(filterText.toLowerCase()) === -1) {
       return;
     }
 
-    console.log(product.name.toLowerCase().indexOf(filterText.toLowerCase()));
-    console.log(inStockOnly && !product.stocked);
+    // console.log(product.name.toLowerCase().indexOf(filterText.toLowerCase()));
+    // console.log(inStockOnly && !product.stocked);
 
+    /** if the isStockOnly is true and the product is not in the
+     * stock(product.stocked is false), its skipped and the loop
+     * move to the next product
+     */
     if (inStockOnly && !product.stocked) {
       return;
     }
 
+    /** if the current product category is different from the lastCategory
+     * a new productCategoryRow comp is added to the rows array
+     */
     if (product.category !== lastCategory) {
       rows.push(
         <ProductCategoryRow
@@ -50,6 +63,8 @@ function ProductTable({ products, filterText, inStockOnly }) {
     rows.push(<ProductRow product={product} key={product.name} />);
     lastCategory = product.category;
   });
+
+  // console.log(rows[0]);
 
   return (
     <table>
