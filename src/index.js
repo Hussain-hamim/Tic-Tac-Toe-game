@@ -5,12 +5,13 @@ import reportWebVitals from "./reportWebVitals";
 import ReactDev from "./ReactDev";
 import "bootstrap/dist/css/bootstrap.css";
 import App from "./App";
+import App2 from "./App2";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <React.StrictMode>
     {/* <ReactDev /> */}
-    <App />
+    <App2 />
   </React.StrictMode>
 );
 
