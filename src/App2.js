@@ -1,15 +1,21 @@
 import { useState } from "react";
 
-export default function FeedbackForm() {
-  // const [name, setName] = useState("");
+export default function Counter() {
+  const [number, setNumber] = useState(0);
 
-  // Within a single event handler,
-  // a regular variable will do fine
-  // no need for state
-  function handleClick() {
-    const name = prompt("What is your name?");
-    alert(`Hello, ${name}!`);
-  }
-
-  return <button onClick={handleClick}>Greet</button>;
+  return (
+    <>
+      <h1>{number}</h1>
+      <button
+        onClick={() => {
+          setNumber(number + 5);
+          setTimeout(() => {
+            alert(number);
+          }, 1000);
+        }}
+      >
+        +5
+      </button>
+    </>
+  );
 }
