@@ -39,12 +39,16 @@ export default function App() {
       <TestCase baseState={0} queue={[5, increment]} expected={6} />
       <hr />
       <TestCase baseState={0} queue={[5, increment, 42]} expected={42} />
+      <hr />
+      <TestCase baseState={0} queue={[5, increment, increment]} expected={7} />
     </>
   );
 }
 
 function TestCase({ baseState, queue, expected }) {
   const actual = getFinalState(baseState, queue);
+  // console.log(actual);
+  console.log(getFinalState(0, [increment, 42]));
   return (
     <>
       <p>
