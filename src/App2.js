@@ -1,8 +1,8 @@
-import { useState } from "react";
+import { useImmer } from "use-immer";
 import second from "./logo192.png";
 
 export default function Form() {
-  const [person, setPerson] = useState({
+  const [person, updatePerson] = useImmer({
     name: "Niki de Saint Phalle",
     artwork: {
       title: "Blue Nana",
@@ -12,39 +12,26 @@ export default function Form() {
   });
 
   function handleNameChange(e) {
-    setPerson({
-      ...person,
-      name: e.target.value,
+    updatePerson((draft) => {
+      draft.name = e.target.value;
     });
   }
 
   function handleTitleChange(e) {
-    setPerson({
-      ...person,
-      artwork: {
-        ...person.artwork,
-        title: e.target.value,
-      },
+    updatePerson((draft) => {
+      draft.artwork.title = e.target.value;
     });
   }
 
   function handleCityChange(e) {
-    setPerson({
-      ...person,
-      artwork: {
-        ...person.artwork,
-        city: e.target.value,
-      },
+    updatePerson((draft) => {
+      draft.artwork.city = e.target.value;
     });
   }
 
   function handleImageChange(e) {
-    setPerson({
-      ...person,
-      artwork: {
-        ...person.artwork,
-        image: e.target.value,
-      },
+    updatePerson((draft) => {
+      draft.artwork.image = e.target.value;
     });
   }
 
@@ -69,7 +56,6 @@ export default function Form() {
         Image:
         <input value={person.artwork.image} onChange={handleImageChange} />
       </label>
-      <br />
       <br />
       <p>
         <i>{person.artwork.title}</i>
