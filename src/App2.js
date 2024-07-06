@@ -23,7 +23,10 @@ function getFinalState(baseState, queue) {
 function increment(n) {
   return n + 1;
 }
-increment.toString = () => "n => n+1";
+// increment.toString = () => "n => n+1";
+
+console.log((increment.toString = () => "n => n+1"));
+increment.toString = () => "fn increment by 1";
 
 export default function App() {
   return (
@@ -31,7 +34,8 @@ export default function App() {
       <TestCase baseState={0} queue={[1, 1, 1]} expected={1} />
       <hr />
       <TestCase
-        baseState={0}
+        // the base state is should be consider
+        baseState={8}
         queue={[increment, increment, increment]}
         expected={3}
       />
@@ -56,7 +60,7 @@ export default function App() {
 function TestCase({ baseState, queue, expected }) {
   const actual = getFinalState(baseState, queue);
   // console.log(actual);
-  console.log(getFinalState(0, [increment, 42]));
+  // console.log(getFinalState(0, [increment, 42]));
   return (
     <>
       <p>
