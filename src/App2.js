@@ -7,34 +7,31 @@ export default function Form() {
     email: "hussainhamim83@gmail.com",
   });
 
-  function handleFirstNameChange(e) {
-    // person.firstName = e.target.value;
-    setPerson({ ...person, firstName: e.target.value });
-  }
-
-  function handleLastNameChange(e) {
-    // person.lastName = e.target.value;
-    setPerson({ ...person, firstLast: e.target.value });
-  }
-
-  function handleEmailChange(e) {
-    // person.email = e.target.value;
-    setPerson({ ...person, email: e.target.value });
+  function handleChanges(e) {
+    setPerson({ ...person, [e.target.name]: e.target.value });
   }
 
   return (
     <>
       <label>
         First name:
-        <input value={person.firstName} onChange={handleFirstNameChange} />
+        <input
+          name="firstName"
+          value={person.firstName}
+          onChange={handleChanges}
+        />
       </label>
       <label>
         Last name:
-        <input value={person.lastName} onChange={handleLastNameChange} />
+        <input
+          name="lastName"
+          value={person.lastName}
+          onChange={handleChanges}
+        />
       </label>
       <label>
         Email:
-        <input value={person.email} onChange={handleEmailChange} />
+        <input name="email" value={person.email} onChange={handleChanges} />
       </label>
       <p>
         {person.firstName} {person.lastName} ({person.email})
