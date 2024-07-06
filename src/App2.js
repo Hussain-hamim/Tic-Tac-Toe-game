@@ -1,65 +1,84 @@
 import { useState } from "react";
+import second from "./logo192.png";
 
 export default function Form() {
   const [person, setPerson] = useState({
-    firstName: "Hussain",
-    lastName: "Hamim",
-    email: "hussainhamim83@gmail.com",
-    address: {
-      country: "Afghanistan",
-      city: "Khost",
+    name: "Niki de Saint Phalle",
+    artwork: {
+      title: "Blue Nana",
+      city: "Hamburg",
+      image: second,
     },
   });
 
-  function handleChanges(e) {
-    setPerson({ ...person, [e.target.name]: e.target.value });
-  }
-
-  function handleSelect(e) {
+  function handleNameChange(e) {
     setPerson({
       ...person,
-      address: { ...person.address, city: e.target.value },
+      name: e.target.value,
+    });
+  }
+
+  function handleTitleChange(e) {
+    setPerson({
+      ...person,
+      artwork: {
+        ...person.artwork,
+        title: e.target.value,
+      },
+    });
+  }
+
+  function handleCityChange(e) {
+    setPerson({
+      ...person,
+      artwork: {
+        ...person.artwork,
+        city: e.target.value,
+      },
+    });
+  }
+
+  function handleImageChange(e) {
+    setPerson({
+      ...person,
+      artwork: {
+        ...person.artwork,
+        image: e.target.value,
+      },
     });
   }
 
   return (
     <>
       <label>
-        First name:
-        <input
-          name="firstName"
-          value={person.firstName}
-          onChange={handleChanges}
-        />
+        Name:
+        <input value={person.name} onChange={handleNameChange} />
       </label>
       <br />
       <label>
-        Last name:
-        <input
-          name="lastName"
-          value={person.lastName}
-          onChange={handleChanges}
-        />
+        Title:
+        <input value={person.artwork.title} onChange={handleTitleChange} />
       </label>
       <br />
       <label>
-        Email:
-        <input name="email" value={person.email} onChange={handleChanges} />
+        City:
+        <input value={person.artwork.city} onChange={handleCityChange} />
       </label>
       <br />
-      City:
-      <select name="city" value={person.address.city} onChange={handleSelect}>
-        <option value="khost">Khost</option>
-        <option value="kabul">Kabul</option>
-      </select>
+      <label>
+        Image:
+        <input value={person.artwork.image} onChange={handleImageChange} />
+      </label>
       <br />
       <br />
       <p>
-        {person.firstName} {person.lastName} ({person.email})
+        <i>{person.artwork.title}</i>
+        {" by "}
+        {person.name}
+        <br />
+        (located in {person.artwork.city})
       </p>
-      <p>
-        Address: {person.address.city} - {person.address.country}
-      </p>
+      <img src={person.artwork.image} alt={person.artwork.title} />
     </>
   );
 }
