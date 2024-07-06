@@ -1,85 +1,44 @@
-// Implementing the state queue yourself
+import { useState } from "react";
+export default function MovingDot() {
+  const [position, setPosition] = useState({
+    x: 0,
+    y: 0,
+  });
 
-function getFinalState(baseState, queue) {
-  let finalState = baseState;
+  console.log(position.x, position.y);
 
-  // TODO: do something with the queue...
-
-  for (let update of queue) {
-    if (typeof update === "function") {
-      // TODO: apply the updater function
-      finalState = update(finalState);
-    } else {
-      // TODO: replace the state
-      finalState = update;
-    }
-  }
-
-  return finalState;
-}
-
-////////////////////////////////////////
-
-function increment(n) {
-  return n + 1;
-}
-// increment.toString = () => "n => n+1";
-
-console.log((increment.toString = () => "n => n+1"));
-increment.toString = () => "fn increment by 1";
-
-export default function App() {
   return (
-    <>
-      <TestCase baseState={0} queue={[1, 1, 1]} expected={1} />
-      <hr />
-      <TestCase
-        // the base state is should be consider
-        baseState={8}
-        queue={[increment, increment, increment]}
-        expected={3}
-      />
-      <hr />
-      <TestCase baseState={0} queue={[5, increment]} expected={6} />
-      <hr />
-      <TestCase baseState={0} queue={[5, increment, 42]} expected={42} />
-      <hr />
-      <TestCase baseState={0} queue={[5, increment, increment]} expected={7} />
-      <hr />
-      <TestCase baseState={0} queue={[5, 5]} expected={5} />
-      <hr />
-      <TestCase
-        baseState={0}
-        queue={[5, increment, 7, increment]}
-        expected={8}
-      />
-    </>
-  );
-}
+    <div
+      onPointerMove={(e) => {
+        // direct mutation is not fine
+        // position.x = e.clientX;
+        // position.y = e.clientY;
 
-function TestCase({ baseState, queue, expected }) {
-  const actual = getFinalState(baseState, queue);
-  // console.log(actual);
-  // console.log(getFinalState(0, [increment, 42]));
-  return (
-    <>
-      <p>
-        Base state: <b>{baseState}</b>
-      </p>
-      <p>
-        Queue: <b>[{queue.join(", ")}]</b>
-      </p>
-      <p>
-        Expected result: <b>{expected}</b>
-      </p>
-      <p
+        // however local mutation is fine
+        // const obj = {}
+        // obj.x = e.clientX
+        // obj.y = e.clientY
+
+        setPosition({ x: e.clientX, y: e.clientY });
+      }}
+      style={{
+        position: "relative",
+        width: "100vw",
+        height: "100vh",
+      }}
+    >
+      <div
         style={{
-          color: actual === expected ? "green" : "red",
+          position: "absolute",
+          backgroundColor: "red",
+          borderRadius: "50%",
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          left: -10,
+          top: -10,
+          width: 20,
+          height: 20,
         }}
-      >
-        Your result: <b>{actual}</b> (
-        {actual === expected ? "correct" : "wrong"})
-      </p>
-    </>
+      />
+    </div>
   );
 }
