@@ -1,32 +1,42 @@
 import { useState } from "react";
 
-let initCounters = [0, 0, 0];
+let nextId = 3;
+const initialArtists = [
+  { id: 0, name: "Marta Colvin Andrade" },
+  { id: 1, name: "Lamidi Olonade Fakeye" },
+  { id: 2, name: "Louise Nevelson" },
+  { id: 2, name: "Louise Nevelson" },
+  { id: 2, name: "Louise Nevelson" },
+];
 
-export default function CounterList() {
-  const [counters, setCounters] = useState(initCounters);
+export default function List() {
+  const [name, setName] = useState("");
+  const [artists, setArtists] = useState(initialArtists);
 
-  function handleIncrementClick(index) {
-    const nextCounters = counters.map((c, i) => {
-      if (i === index) {
-        // increment the clicked counter
-        return c + 1;
-      } else {
-        // the rest haven't changed
-        return c;
-      }
-    });
-    setCounters(nextCounters);
+  function handleClick() {
+    const insertAt = 2; // Could be any index
+    const nextArtists = [
+      // Items before the insertion point:
+      ...artists.slice(0, insertAt),
+      // New item:
+      { id: nextId++, name: name },
+      // Items after the insertion point:
+      ...artists.slice(insertAt),
+    ];
+    setArtists(nextArtists);
+    setName("");
   }
 
   return (
-    <ul>
-      {counters.map((counter, index) => (
-        <li key={index}>
-          {counter}
-
-          <button onClick={() => handleIncrementClick(index)}>+1</button>
-        </li>
-      ))}
-    </ul>
+    <>
+      <h1>Inspiring sculptors:</h1>
+      <input value={name} onChange={(e) => setName(e.target.value)} />
+      <button onClick={handleClick}>Insert</button>
+      <ul>
+        {artists.map((artist) => (
+          <li key={artist.id}>{artist.name}</li>
+        ))}
+      </ul>
+    </>
   );
 }
