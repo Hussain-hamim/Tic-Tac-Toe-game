@@ -29,6 +29,15 @@ export default function TaskApp() {
   }
 
   function handleChangeTodo(nextTodo) {
+    updateTodos(
+      todos.map((todo) => {
+        if (todo.id === nextTodo.id) {
+          return nextTodo;
+        } else {
+          return todo;
+        }
+      })
+    );
     // setTodos(
     //   todos.map((todo) => {
     //     if (todo.id === nextTodo.id) {
@@ -39,11 +48,11 @@ export default function TaskApp() {
     //   })
     // );
 
-    updateTodos((draft) => {
-      const todo = draft.find((t) => t.id === nextTodo.id);
-      todo.title = nextTodo.title;
-      todo.done = nextTodo.done;
-    });
+    // updateTodos((draft) => {
+    //   const todo = draft.find((t) => t.id === nextTodo.id);
+    //   todo.title = nextTodo.title;
+    //   todo.done = nextTodo.done;
+    // });
 
     // const todo = todos.find((t) => t.id === nextTodo.id);
     // todo.title = nextTodo.title;
@@ -53,10 +62,12 @@ export default function TaskApp() {
   function handleDeleteTodo(todoId) {
     // setTodos(todos.filter((todo) => todo.id !== todoId));
 
-    updateTodos((draft) => {
-      const index = draft.findIndex((t) => t.id === todoId);
-      draft.splice(index, 1);
-    });
+    updateTodos(todos.filter((todo) => todo.id !== todoId));
+
+    // updateTodos((draft) => {
+    //   const index = draft.findIndex((t) => t.id === todoId);
+    //   draft.splice(index, 1);
+    // });
 
     // const index = todos.findIndex((t) => t.id === todoId);
     // todos.splice(index, 1);
