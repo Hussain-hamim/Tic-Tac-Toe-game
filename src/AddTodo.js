@@ -1,22 +1,28 @@
-import { useState } from "react";
+import React, { useState } from "react";
 
-export default function AddTodo({ onAddTodo }) {
-  const [title, setTitle] = useState("");
+const AddTodo = ({ onAddTodo }) => {
+  const [titles, setTitles] = useState("");
+
   return (
-    <>
+    <div>
       <input
-        placeholder="Add todo"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
+        placeholder="add todo..."
+        type="text"
+        value={titles}
+        onChange={(e) => {
+          setTitles(e.target.value);
+        }}
       />
       <button
         onClick={() => {
-          setTitle("");
-          onAddTodo(title);
+          setTitles("");
+          onAddTodo(titles);
         }}
       >
         Add
       </button>
-    </>
+    </div>
   );
-}
+};
+
+export default AddTodo;

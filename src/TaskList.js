@@ -20,12 +20,10 @@ function Task({ todo, onChange, onDelete }) {
     todoContent = (
       <>
         <input
+          type="text"
           value={todo.title}
           onChange={(e) => {
-            onChange({
-              ...todo,
-              title: e.target.value,
-            });
+            onChange({ ...todo, title: e.target.value });
           }}
         />
         <button onClick={() => setIsEditing(false)}>Save</button>
@@ -39,17 +37,13 @@ function Task({ todo, onChange, onDelete }) {
       </>
     );
   }
+
   return (
     <label>
       <input
         type="checkbox"
-        checked={todo.done}
-        onChange={(e) => {
-          onChange({
-            ...todo,
-            done: e.target.checked,
-          });
-        }}
+        value={todo.done}
+        onChange={(e) => onChange({ ...todo, done: e.target.checked })}
       />
       {todoContent}
       <button onClick={() => onDelete(todo.id)}>Delete</button>

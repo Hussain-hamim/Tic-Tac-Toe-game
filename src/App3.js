@@ -14,6 +14,7 @@ export default function TaskApp() {
   const [todos, setTodos] = useState(initialTodos);
 
   function handleAddTodo(title) {
+    // setTodos([...todos, { id: nextId++, title: title, done: false }]);
     setTodos([...todos, { id: nextId++, title: title, done: false }]);
 
     // todos.push({
