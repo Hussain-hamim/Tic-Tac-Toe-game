@@ -16,6 +16,7 @@ const AddTodo = ({ onAddTodo }) => {
       <button
         onClick={() => {
           setTitles("");
+          if (titles === " " || titles === "  ") return;
           onAddTodo(titles);
         }}
       >
