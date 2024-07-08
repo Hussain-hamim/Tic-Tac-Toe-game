@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddTodo from "./AddTodo.js";
 import TaskList from "./TaskList.js";
+import { useImmer } from "use-immer";
 
 let nextId = 3;
 
@@ -11,12 +12,15 @@ const initialTodos = [
 ];
 
 export default function TaskApp() {
-  const [todos, setTodos] = useState(initialTodos);
+  // const [todos, setTodos] = useState(initialTodos);
+  const [todos, updateTodos] = useImmer(initialTodos);
 
   function handleAddTodo(title) {
     // setTodos([...todos, { id: nextId++, title: title, done: false }]);
-    setTodos([...todos, { id: nextId++, title: title, done: false }]);
 
+    updateTodos((draft) => {
+      draft.push({ id: nextId++, title: title, done: false });
+    });
     // todos.push({
     //   id: nextId++,
     //   title: title,
@@ -25,15 +29,21 @@ export default function TaskApp() {
   }
 
   function handleChangeTodo(nextTodo) {
-    setTodos(
-      todos.map((todo) => {
-        if (todo.id === nextTodo.id) {
-          return nextTodo;
-        } else {
-          return todo;
-        }
-      })
-    );
+    // setTodos(
+    //   todos.map((todo) => {
+    //     if (todo.id === nextTodo.id) {
+    //       return nextTodo;
+    //     } else {
+    //       return todo;
+    //     }
+    //   })
+    // );
+
+    updateTodos((draft) => {
+      const todo = draft.find((t) => t.id === nextTodo.id);
+      todo.title = nextTodo.title;
+      todo.done = nextTodo.done;
+    });
 
     // const todo = todos.find((t) => t.id === nextTodo.id);
     // todo.title = nextTodo.title;
@@ -41,7 +51,12 @@ export default function TaskApp() {
   }
 
   function handleDeleteTodo(todoId) {
-    setTodos(todos.filter((todo) => todo.id !== todoId));
+    // setTodos(todos.filter((todo) => todo.id !== todoId));
+
+    updateTodos((draft) => {
+      const index = draft.findIndex((t) => t.id === todoId);
+      draft.splice(index, 1);
+    });
 
     // const index = todos.findIndex((t) => t.id === todoId);
     // todos.splice(index, 1);
