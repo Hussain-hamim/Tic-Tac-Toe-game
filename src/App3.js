@@ -1,7 +1,5 @@
 import { useState } from "react";
 
-let nextId = 3;
-
 const initialList = [
   { id: 0, title: "Big Bellies", seen: false },
   { id: 1, title: "Lunar Landscape", seen: false },
@@ -10,7 +8,7 @@ const initialList = [
 
 export default function BucketList() {
   const [myList, setMyList] = useState(initialList);
-  const [yourList, setYourList] = useState(initialList);
+  const [myList2, setMyList2] = useState(initialList);
 
   function handleToggleMyList(artworkId, nextSeen) {
     setMyList(
@@ -24,31 +22,18 @@ export default function BucketList() {
         }
       })
     );
-    ///// mutation code buggy
-    // const myNextList = [...myList];
-    // const artwork = myNextList.find((a) => a.id === artworkId);
-    // artwork.seen = nextSeen;
-    // setMyList(myNextList);
   }
 
-  function handleToggleYourList(artworkId, nextSeen) {
-    setYourList(
-      yourList.map((artwork) => {
+  function handleToggleMyList2(artworkId, nextSeen) {
+    setMyList2(
+      myList2.map((artwork) => {
         if (artwork.id === artworkId) {
-          // create a new object with changes
           return { ...artwork, seen: nextSeen };
         } else {
-          // no changes
           return artwork;
         }
       })
     );
-
-    ///// mutation code buggy
-    // const yourNextList = [...yourList];
-    // const artwork = yourNextList.find((a) => a.id === artworkId);
-    // artwork.seen = nextSeen;
-    // setYourList(yourNextList);
   }
 
   return (
@@ -56,8 +41,8 @@ export default function BucketList() {
       <h1>Art Bucket List</h1>
       <h2>My list of art to see:</h2>
       <ItemList artworks={myList} onToggle={handleToggleMyList} />
-      <h2>Your list of art to see:</h2>
-      <ItemList artworks={yourList} onToggle={handleToggleYourList} />
+      <hr />
+      <ItemList2 artworks={myList2} onToggle={handleToggleMyList2} />
     </>
   );
 }
@@ -74,6 +59,25 @@ function ItemList({ artworks, onToggle }) {
               onChange={(e) => {
                 onToggle(artwork.id, e.target.checked);
               }}
+            />
+            {artwork.title}
+          </label>
+        </li>
+      ))}
+    </ul>
+  );
+}
+
+function ItemList2({ artworks, onToggle }) {
+  return (
+    <ul>
+      {artworks.map((artwork) => (
+        <li key={artwork.id}>
+          <label>
+            <input
+              type="checkbox"
+              checked={artwork.seen}
+              onChange={(e) => onToggle(artwork.id, e.target.checked)}
             />
             {artwork.title}
           </label>
