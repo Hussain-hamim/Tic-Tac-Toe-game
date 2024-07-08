@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useImmer } from "use-immer";
 
 const initialList = [
   { id: 0, title: "Big Bellies", seen: false },
@@ -7,33 +8,46 @@ const initialList = [
 ];
 
 export default function BucketList() {
-  const [myList, setMyList] = useState(initialList);
-  const [myList2, setMyList2] = useState(initialList);
+  // const [myList, setMyList] = useState(initialList);
+  // const [myList2, setMyList2] = useState(initialList);
+
+  const [myList, updateMyList] = useImmer(initialList);
+  const [myList2, updateMyList2] = useImmer(initialList);
 
   function handleToggleMyList(artworkId, nextSeen) {
-    setMyList(
-      myList.map((artwork) => {
-        if (artwork.id === artworkId) {
-          // create a new object with changes
-          return { ...artwork, seen: nextSeen };
-        } else {
-          // no changes
-          return artwork;
-        }
-      })
-    );
+    updateMyList((draft) => {
+      const artwork = draft.find((a) => a.id === artworkId);
+      artwork.seen = nextSeen;
+    });
+
+    // setMyList(
+    //   myList.map((artwork) => {
+    //     if (artwork.id === artworkId) {
+    //       // create a new object with changes
+    //       return { ...artwork, seen: nextSeen };
+    //     } else {
+    //       // no changes
+    //       return artwork;
+    //     }
+    //   })
+    // );
   }
 
   function handleToggleMyList2(artworkId, nextSeen) {
-    setMyList2(
-      myList2.map((artwork) => {
-        if (artwork.id === artworkId) {
-          return { ...artwork, seen: nextSeen };
-        } else {
-          return artwork;
-        }
-      })
-    );
+    updateMyList2((draft) => {
+      const artwork = draft.find((a) => a.id === artworkId);
+      artwork.seen = nextSeen;
+    });
+
+    // setMyList2(
+    //   myList2.map((artwork) => {
+    //     if (artwork.id === artworkId) {
+    //       return { ...artwork, seen: nextSeen };
+    //     } else {
+    //       return artwork;
+    //     }
+    //   })
+    // );
   }
 
   return (
