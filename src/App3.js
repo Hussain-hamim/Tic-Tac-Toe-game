@@ -1,27 +1,31 @@
-import { useState } from "react";
+import React, { useState } from "react";
+import second from "./logo192.png";
 
-export default function Picture() {
+const App3 = () => {
   const [isActive, setIsActive] = useState(false);
 
-  let backgroundClassName = "background";
-  let pictureClassName = "picture";
+  let bgClassName = "background";
+  let picClassName = "picture";
+
   if (isActive) {
-    pictureClassName += " picture--active";
+    picClassName += " pic--active";
   } else {
-    backgroundClassName += " background--active";
+    bgClassName += "bg--active";
   }
 
   return (
-    <div className={backgroundClassName} onClick={() => setIsActive(false)}>
+    <div className={bgClassName} onClick={() => setIsActive(false)}>
       <img
+        className={picClassName}
         onClick={(e) => {
-          e.stopPropagation();
           setIsActive(true);
+          e.stopPropagation();
         }}
-        className={pictureClassName}
-        alt="Rainbow houses in Kampung Pelangi, Indonesia"
-        src="https://i.imgur.com/5qwVYb1.jpeg"
+        src={second}
+        alt="a pic"
       />
     </div>
   );
-}
+};
+
+export default App3;
