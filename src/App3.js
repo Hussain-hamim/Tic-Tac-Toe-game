@@ -1,86 +1,62 @@
 import { useState } from "react";
-import AddTodo from "./AddTodo.js";
-import TaskList from "./TaskList.js";
-import { useImmer } from "use-immer";
 
-let nextId = 3;
+export default function Form() {
+  const [answer, setAnswer] = useState("");
+  const [error, setError] = useState(null);
+  const [status, setStatus] = useState("typing");
 
-const initialTodos = [
-  { id: 0, title: "Buy milk", done: true },
-  { id: 1, title: "Eat tacos", done: false },
-  { id: 2, title: "Brew tea", done: false },
-];
-
-export default function TaskApp() {
-  // const [todos, setTodos] = useState(initialTodos);
-  const [todos, updateTodos] = useImmer(initialTodos);
-
-  function handleAddTodo(title) {
-    // setTodos([...todos, { id: nextId++, title: title, done: false }]);
-
-    updateTodos((draft) => {
-      draft.push({ id: nextId++, title: title, done: false });
-    });
-    // todos.push({
-    //   id: nextId++,
-    //   title: title,
-    //   done: false,
-    // });
+  if (status === "success") {
+    return <h1>That's right!</h1>;
   }
 
-  function handleChangeTodo(nextTodo) {
-    updateTodos(
-      todos.map((todo) => {
-        if (todo.id === nextTodo.id) {
-          return nextTodo;
-        } else {
-          return todo;
-        }
-      })
-    );
-    // setTodos(
-    //   todos.map((todo) => {
-    //     if (todo.id === nextTodo.id) {
-    //       return nextTodo;
-    //     } else {
-    //       return todo;
-    //     }
-    //   })
-    // );
-
-    // updateTodos((draft) => {
-    //   const todo = draft.find((t) => t.id === nextTodo.id);
-    //   todo.title = nextTodo.title;
-    //   todo.done = nextTodo.done;
-    // });
-
-    // const todo = todos.find((t) => t.id === nextTodo.id);
-    // todo.title = nextTodo.title;
-    // todo.done = nextTodo.done;
+  async function handleSubmit(e) {
+    e.preventDefault();
+    setStatus("submitting");
+    try {
+      await submitForm(answer);
+      setStatus("success");
+    } catch (err) {
+      setStatus("typing");
+      setError(err);
+    }
   }
 
-  function handleDeleteTodo(todoId) {
-    // setTodos(todos.filter((todo) => todo.id !== todoId));
-
-    updateTodos(todos.filter((todo) => todo.id !== todoId));
-
-    // updateTodos((draft) => {
-    //   const index = draft.findIndex((t) => t.id === todoId);
-    //   draft.splice(index, 1);
-    // });
-
-    // const index = todos.findIndex((t) => t.id === todoId);
-    // todos.splice(index, 1);
+  function handleTextareaChange(e) {
+    setAnswer(e.target.value);
   }
 
   return (
     <>
-      <AddTodo onAddTodo={handleAddTodo} />
-      <TaskList
-        todos={todos}
-        onChangeTodo={handleChangeTodo}
-        onDeleteTodo={handleDeleteTodo}
-      />
+      <h2>City quiz</h2>
+      <p>
+        In which city is there a billboard that turns air into drinkable water?
+      </p>
+      <form onSubmit={handleSubmit}>
+        <textarea
+          value={answer}
+          onChange={handleTextareaChange}
+          disabled={status === "submitting"}
+        />
+        <br />
+        <button disabled={answer.length === 0 || status === "submitting"}>
+          Submit
+        </button>
+        {error !== null && <p className="Error">{error.message}</p>}
+      </form>
     </>
   );
+}
+
+function submitForm(answer) {
+  // Pretend it's hitting the network.
+  return new Promise((resolve, reject) => {
+    setTimeout(() => {
+      let shouldError = answer.toLowerCase() !== "lima";
+      if (shouldError) {
+        reject(new Error("Good guess but a wrong answer. Try again!"));
+      } else {
+        resolve();
+      }
+    }, 1500);
+  });
 }
