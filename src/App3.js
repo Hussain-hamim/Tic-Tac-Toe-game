@@ -1,36 +1,55 @@
 import { useState } from "react";
 
-export default function MovingDot() {
-  const [position, setPosition] = useState({
-    x: 0,
-    y: 0,
-  });
+const initialItems = [
+  { title: "pretzels", id: 0 },
+  { title: "crispy seaweed", id: 1 },
+  { title: "granola bar", id: 2 },
+];
+
+export default function Menu() {
+  const [items, setItems] = useState(initialItems);
+  const [selectedId, setSelectedId] = useState(0);
+
+  const selectedItem = items.find((item) => item.id === selectedId);
+
+  function handleItemChange(id, e) {
+    setItems(
+      items.map((item) => {
+        if (item.id === id) {
+          return {
+            ...item,
+            title: e.target.value,
+          };
+        } else {
+          return item;
+        }
+      })
+    );
+  }
+
   return (
-    <div
-      onPointerMove={(e) => {
-        setPosition({
-          x: e.clientX,
-          y: e.clientY,
-        });
-      }}
-      style={{
-        position: "relative",
-        width: "100vw",
-        height: "100vh",
-      }}
-    >
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "red",
-          borderRadius: "50%",
-          transform: `translate(${position.x}px, ${position.y}px)`,
-          left: -10,
-          top: -10,
-          width: 20,
-          height: 20,
-        }}
-      />
-    </div>
+    <>
+      <h2>What's your travel snack?</h2>
+      <ul>
+        {items.map((item, index) => (
+          <li key={item.id}>
+            <input
+              value={item.title}
+              onChange={(e) => {
+                handleItemChange(item.id, e);
+              }}
+            />{" "}
+            <button
+              onClick={() => {
+                setSelectedId(item.id);
+              }}
+            >
+              Choose
+            </button>
+          </li>
+        ))}
+      </ul>
+      <p>You picked {selectedItem.title}.</p>
+    </>
   );
 }
