@@ -1,55 +1,72 @@
-import { useState } from "react";
+import { useImmer } from "use-immer";
+import { initialTravelPlan } from "./places.js";
 
-const initialItems = [
-  { title: "pretzels", id: 0 },
-  { title: "crispy seaweed", id: 1 },
-  { title: "granola bar", id: 2 },
-];
+export default function TravelPlan() {
+  const [plan, updatePlan] = useImmer(initialTravelPlan);
 
-export default function Menu() {
-  const [items, setItems] = useState(initialItems);
-  const [selectedId, setSelectedId] = useState(0);
+  function handleComplete(parentId, childId) {
+    updatePlan((draft) => {
+      // Remove from the parent place's child IDs.
+      const parent = draft[parentId];
+      parent.childIds = parent.childIds.filter((id) => id !== childId);
 
-  const selectedItem = items.find((item) => item.id === selectedId);
+      // Forget this place and all its subtree.
+      deleteAllChildren(childId);
 
-  function handleItemChange(id, e) {
-    setItems(
-      items.map((item) => {
-        if (item.id === id) {
-          return {
-            ...item,
-            title: e.target.value,
-          };
-        } else {
-          return item;
-        }
-      })
-    );
+      function deleteAllChildren(id) {
+        const place = draft[id];
+        place.childIds.forEach(deleteAllChildren);
+        delete draft[id];
+      }
+    });
   }
 
+  const root = plan[0];
+  const planetIds = root.childIds;
   return (
     <>
-      <h2>What's your travel snack?</h2>
-      <ul>
-        {items.map((item, index) => (
-          <li key={item.id}>
-            <input
-              value={item.title}
-              onChange={(e) => {
-                handleItemChange(item.id, e);
-              }}
-            />{" "}
-            <button
-              onClick={() => {
-                setSelectedId(item.id);
-              }}
-            >
-              Choose
-            </button>
-          </li>
+      <h2>Places to visit</h2>
+      <ol>
+        {planetIds.map((id) => (
+          <PlaceTree
+            key={id}
+            id={id}
+            parentId={0}
+            placesById={plan}
+            onComplete={handleComplete}
+          />
         ))}
-      </ul>
-      <p>You picked {selectedItem.title}.</p>
+      </ol>
     </>
+  );
+}
+
+function PlaceTree({ id, parentId, placesById, onComplete }) {
+  const place = placesById[id];
+  const childIds = place.childIds;
+  return (
+    <li>
+      {place.title}
+      <button
+        onClick={() => {
+          onComplete(parentId, id);
+        }}
+      >
+        Complete
+      </button>
+      {childIds.length > 0 && (
+        <ol>
+          {childIds.map((childId) => (
+            <PlaceTree
+              key={childId}
+              id={childId}
+              parentId={id}
+              placesById={placesById}
+              onComplete={onComplete}
+            />
+          ))}
+        </ol>
+      )}
+    </li>
   );
 }
