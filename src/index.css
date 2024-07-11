@@ -25,6 +25,6 @@ code {
   color: red;
 }
 
-.highlighted:hover {
+.highlighted {
   color: yellowgreen;
 }

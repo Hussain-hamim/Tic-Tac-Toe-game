@@ -1,4 +1,4 @@
-export const initialLetters = [
+export const letters = [
   {
     id: 0,
     subject: "Ready for adventure?",
@@ -12,6 +12,16 @@ export const initialLetters = [
   {
     id: 2,
     subject: "Festival Begins in Just SEVEN Days!",
+    isStarred: false,
+  },
+  {
+    id: 3,
+    subject: "Time to go see some friends!",
+    isStarred: true,
+  },
+  {
+    id: 4,
+    subject: "Go to gym!",
     isStarred: false,
   },
 ];
