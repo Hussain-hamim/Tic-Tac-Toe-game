@@ -24,3 +24,7 @@ code {
 .highlight {
   color: red;
 }
+
+.highlighted:hover {
+  color: yellowgreen;
+}
