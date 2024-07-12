@@ -6,6 +6,7 @@ export default function ContactList() {
 
   const displayedContacts = [...contacts];
   if (reverse) {
+    // this method mutate array so we created a copy
     displayedContacts.reverse();
   }
 
@@ -23,6 +24,7 @@ export default function ContactList() {
       </label>
       <ul>
         {displayedContacts.map((contact, i) => (
+          // use contact.id as a key instead of i
           <li key={contact.id}>
             <Contact contact={contact} />
           </li>
