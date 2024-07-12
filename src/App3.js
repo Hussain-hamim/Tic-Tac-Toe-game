@@ -1,58 +1,25 @@
 import { useState } from "react";
+import Chat from "./Chat.js";
+import ContactList from "./ContactList.js";
 
-export default function Scoreboard() {
-  const [isPlayerA, setIsPlayerA] = useState(true);
+export default function Messenger() {
+  const [to, setTo] = useState(contacts[0]);
   return (
     <div>
-      {/* There are two ways to reset state when switching between them: */}
-
-      {/* Render components in different positions */}
-      {isPlayerA && <Counter person="Taylor" />}
-      {!isPlayerA && <Counter person="Sarah" />}
-      <button
-        onClick={() => {
-          setIsPlayerA(!isPlayerA);
-        }}
-      >
-        Next player!
-      </button>
-
-      {/* Give each component an explicit identity with key */}
-      {isPlayerA ? (
-        <Counter key="Taylor" person="Taylor" />
-      ) : (
-        <Counter key="Sarah" person="Sarah" />
-      )}
-      <button
-        onClick={() => {
-          setIsPlayerA(!isPlayerA);
-        }}
-      >
-        Next player!
-      </button>
+      <ContactList
+        contacts={contacts}
+        selectedContact={to}
+        onSelect={(contact) => setTo(contact)}
+      />
+      {/* without specifying the key the state is preserved
+      to other to all chat comp but with key the state is resetting */}
+      <Chat key={to.id} contact={to} />
     </div>
   );
 }
 
-function Counter({ person }) {
-  const [score, setScore] = useState(0);
-  const [hover, setHover] = useState(false);
-
-  let className = "counter";
-  if (hover) {
-    className += " hover";
-  }
-
-  return (
-    <div
-      className={className}
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => setHover(false)}
-    >
-      <h1>
-        {person}'s score: {score}
-      </h1>
-      <button onClick={() => setScore(score + 1)}>Add one</button>
-    </div>
-  );
-}
+const contacts = [
+  { id: 0, name: "Taylor", email: "taylor@mail.com" },
+  { id: 1, name: "Alice", email: "alice@mail.com" },
+  { id: 2, name: "Bob", email: "bob@mail.com" },
+];
