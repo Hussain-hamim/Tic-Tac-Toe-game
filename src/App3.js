@@ -1,5 +1,9 @@
 import { useState } from "react";
 
+/**As a rule of thumb, if you want to preserve the state between
+ *  re-renders, the structure of your tree needs to “match up”
+ *  from one render to another. */
+
 export default function App() {
   const [isFancy, setIsFancy] = useState(false);
   return (
