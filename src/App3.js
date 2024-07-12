@@ -1,35 +1,58 @@
 import { useState } from "react";
 
-/**Pitfall
-This is why you should not nest component function definitions. */
-
-export default function MyComponent() {
-  const [counter, setCounter] = useState(0);
-
-  function MyTextField() {
-    const [text, setText] = useState("");
-
-    return (
-      <>
-        <p>text: {text}</p>
-        <input value={text} onChange={(e) => setText(e.target.value)} />
-      </>
-    );
-  }
-
+export default function Scoreboard() {
+  const [isPlayerA, setIsPlayerA] = useState(true);
   return (
-    <>
-      <MyTextField />
+    <div>
+      {/* There are two ways to reset state when switching between them: */}
+
+      {/* Render components in different positions */}
+      {isPlayerA && <Counter person="Taylor" />}
+      {!isPlayerA && <Counter person="Sarah" />}
       <button
         onClick={() => {
-          setCounter(counter + 1);
+          setIsPlayerA(!isPlayerA);
         }}
       >
-        Clicked {counter} times
+        Next player!
       </button>
-    </>
+
+      {/* Give each component an explicit identity with key */}
+      {isPlayerA ? (
+        <Counter key="Taylor" person="Taylor" />
+      ) : (
+        <Counter key="Sarah" person="Sarah" />
+      )}
+      <button
+        onClick={() => {
+          setIsPlayerA(!isPlayerA);
+        }}
+      >
+        Next player!
+      </button>
+    </div>
   );
 }
 
-/** always declare component functions at the top level,
- *  and don’t nest their definitions. */
+function Counter({ person }) {
+  const [score, setScore] = useState(0);
+  const [hover, setHover] = useState(false);
+
+  let className = "counter";
+  if (hover) {
+    className += " hover";
+  }
+
+  return (
+    <div
+      className={className}
+      onPointerEnter={() => setHover(true)}
+      onPointerLeave={() => setHover(false)}
+    >
+      <h1>
+        {person}'s score: {score}
+      </h1>
+      <button onClick={() => setScore(score + 1)}>Add one</button>
+    </div>
+  );
+}
