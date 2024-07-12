@@ -1,61 +1,39 @@
 import { useState } from "react";
-import first from "./hamim2.jpg";
-import second from "./hhamim.jpg";
+import Contact from "./Contact.js";
 
-export default function Gallery() {
-  const [index, setIndex] = useState(0);
-  const hasNext = index < images.length - 1;
+export default function ContactList() {
+  const [reverse, setReverse] = useState(false);
 
-  console.log(hasNext);
-
-  function handleClick() {
-    if (hasNext) {
-      setIndex(index + 1);
-    } else {
-      setIndex(0);
-    }
+  const displayedContacts = [...contacts];
+  if (reverse) {
+    displayedContacts.reverse();
   }
 
-  let image = images[index];
   return (
     <>
-      <button onClick={handleClick}>Next</button>
-      <h3>
-        Image {index + 1} of {images.length}
-      </h3>
-      <img key={index} alt=".." src={image.src} width={200} />
-      <p>{image.place}</p>
+      <label>
+        <input
+          type="checkbox"
+          value={reverse}
+          onChange={(e) => {
+            setReverse(e.target.checked);
+          }}
+        />{" "}
+        Show in reverse order
+      </label>
+      <ul>
+        {displayedContacts.map((contact, i) => (
+          <li key={contact.id}>
+            <Contact contact={contact} />
+          </li>
+        ))}
+      </ul>
     </>
   );
 }
 
-let images = [
-  {
-    place: "Penang, Malaysia",
-    src: first,
-  },
-  {
-    place: "Lisbon, Portugal",
-    src: second,
-  },
-  {
-    place: "Bilbao, Spain",
-    src: first,
-  },
-  {
-    place: "Valparaíso, Chile",
-    src: second,
-  },
-  {
-    place: "Schwyz, Switzerland",
-    src: first,
-  },
-  {
-    place: "Prague, Czechia",
-    src: second,
-  },
-  {
-    place: "Ljubljana, Slovenia",
-    src: first,
-  },
+const contacts = [
+  { id: 0, name: "Alice", email: "alice@mail.com" },
+  { id: 1, name: "Bob", email: "bob@mail.com" },
+  { id: 2, name: "Taylor", email: "taylor@mail.com" },
 ];
