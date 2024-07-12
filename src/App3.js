@@ -1,56 +1,35 @@
 import { useState } from "react";
 
-/**As a rule of thumb, if you want to preserve the state between
- *  re-renders, the structure of your tree needs to “match up”
- *  from one render to another. */
+/**Pitfall
+This is why you should not nest component function definitions. */
 
-export default function App() {
-  const [isFancy, setIsFancy] = useState(false);
-  return (
-    <div>
-      {isFancy ? (
-        <div>
-          <Counter isFancy={true} />
-        </div>
-      ) : (
-        <section>
-          <Counter isFancy={false} />
-        </section>
-      )}
-      <label>
-        <input
-          type="checkbox"
-          checked={isFancy}
-          onChange={(e) => {
-            setIsFancy(e.target.checked);
-          }}
-        />
-        Use fancy styling
-      </label>
-    </div>
-  );
-}
+export default function MyComponent() {
+  const [counter, setCounter] = useState(0);
 
-function Counter({ isFancy }) {
-  const [score, setScore] = useState(0);
-  const [hover, setHover] = useState(false);
+  function MyTextField() {
+    const [text, setText] = useState("");
 
-  let className = "counter";
-  if (hover) {
-    className += " hover";
-  }
-  if (isFancy) {
-    className += " fancy";
+    return (
+      <>
+        <p>text: {text}</p>
+        <input value={text} onChange={(e) => setText(e.target.value)} />
+      </>
+    );
   }
 
   return (
-    <div
-      className={className}
-      onPointerEnter={() => setHover(true)}
-      onPointerLeave={() => setHover(false)}
-    >
-      <h1>{score}</h1>
-      <button onClick={() => setScore(score + 1)}>Add one</button>
-    </div>
+    <>
+      <MyTextField />
+      <button
+        onClick={() => {
+          setCounter(counter + 1);
+        }}
+      >
+        Clicked {counter} times
+      </button>
+    </>
   );
 }
+
+/** always declare component functions at the top level,
+ *  and don’t nest their definitions. */
