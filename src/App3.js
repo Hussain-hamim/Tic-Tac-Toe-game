@@ -1,25 +1,37 @@
 import { useState } from "react";
-import Chat from "./Chat.js";
-import ContactList from "./ContactList.js";
 
-export default function Messenger() {
-  const [to, setTo] = useState(contacts[0]);
+export default function App() {
+  const [showHint, setShowHint] = useState(false);
   return (
     <div>
-      <ContactList
-        contacts={contacts}
-        selectedContact={to}
-        onSelect={(contact) => setTo(contact)}
-      />
-      {/* without specifying the key the state is preserved
-      to other to all chat comp but with key the state is resetting */}
-      <Chat key={to.id} contact={to} />
+      {showHint && (
+        <p>
+          <i>Hint: Your favorite city?</i>
+        </p>
+      )}
+      <Form />
+      {showHint ? (
+        <button
+          onClick={() => {
+            setShowHint(false);
+          }}
+        >
+          Hide hint
+        </button>
+      ) : (
+        <button
+          onClick={() => {
+            setShowHint(true);
+          }}
+        >
+          Show hint
+        </button>
+      )}
     </div>
   );
 }
 
-const contacts = [
-  { id: 0, name: "Taylor", email: "taylor@mail.com" },
-  { id: 1, name: "Alice", email: "alice@mail.com" },
-  { id: 2, name: "Bob", email: "bob@mail.com" },
-];
+function Form() {
+  const [text, setText] = useState("");
+  return <textarea value={text} onChange={(e) => setText(e.target.value)} />;
+}
