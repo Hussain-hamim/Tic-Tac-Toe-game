@@ -1,41 +1,31 @@
-import { useState } from "react";
-import Contact from "./Contact.js";
+import { useReducer } from "react";
+import Chat from "./Chat.js";
+import ContactList from "./ContactList.js";
+import { initialState, messengerReducer } from "./messengerReducer";
 
-export default function ContactList() {
-  const [reverse, setReverse] = useState(false);
-
-  const displayedContacts = [...contacts];
-  if (reverse) {
-    // this method mutate array so we created a copy
-    displayedContacts.reverse();
-  }
-
+export default function Messenger() {
+  const [state, dispatch] = useReducer(messengerReducer, initialState);
+  const message = state.message;
+  const contact = contacts.find((c) => c.id === state.selectedId);
   return (
-    <>
-      <label>
-        <input
-          type="checkbox"
-          value={reverse}
-          onChange={(e) => {
-            setReverse(e.target.checked);
-          }}
-        />{" "}
-        Show in reverse order
-      </label>
-      <ul>
-        {displayedContacts.map((contact, i) => (
-          // use contact.id as a key instead of i
-          <li key={contact.id}>
-            <Contact contact={contact} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <div>
+      <ContactList
+        contacts={contacts}
+        selectedId={state.selectedId}
+        dispatch={dispatch}
+      />
+      <Chat
+        key={contact.id}
+        message={message}
+        contact={contact}
+        dispatch={dispatch}
+      />
+    </div>
   );
 }
 
 const contacts = [
-  { id: 0, name: "Alice", email: "alice@mail.com" },
-  { id: 1, name: "Bob", email: "bob@mail.com" },
-  { id: 2, name: "Taylor", email: "taylor@mail.com" },
+  { id: 0, name: "Taylor", email: "taylor@mail.com" },
+  { id: 1, name: "Alice", email: "alice@mail.com" },
+  { id: 2, name: "Bob", email: "bob@mail.com" },
 ];

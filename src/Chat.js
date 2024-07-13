@@ -1,19 +1,19 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const Chat = ({ contact }) => {
-  const [text, setText] = useState("");
-
+export default function Chat({ contact, message, dispatch }) {
   return (
-    <div>
+    <section className="chat">
       <textarea
-        placeholder={"chat to " + contact.name}
-        value={text}
-        onChange={(e) => setText(e.target.value)}
+        value={message}
+        placeholder={"Chat to " + contact.name}
+        onChange={(e) => {
+          // TODO: dispatch edited_message
+          // (Read the input value from e.target.value)
+          dispatch({ type: "edited_message", message: e.target.value });
+        }}
       />
       <br />
-      <button>send to {contact.email}</button>
-    </div>
+      <button>Send to {contact.email}</button>
+    </section>
   );
-};
-
-export default Chat;
+}
