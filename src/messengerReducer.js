@@ -1,6 +1,9 @@
 export const initialState = {
   selectedId: 0,
-  message: "Hello",
+  messages: {
+    0: "Hello, Taylor", //draft for contactId = 0
+    1: "Hello, Alice", //draft for contactId = 1
+  },
 };
 
 export function messengerReducer(state, action) {
@@ -12,10 +15,17 @@ export function messengerReducer(state, action) {
         message: "",
       };
     }
+    // when the input is edited
     case "edited_message": {
       return {
+        // keep other state like selection
         ...state,
-        message: action.message,
+        messages: {
+          // keep messages for other contacts
+          ...state.messages,
+          // but change the selected contact's message
+          [state.selectedId]: action.message,
+        },
       };
     }
     case "send": {
