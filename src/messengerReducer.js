@@ -3,6 +3,7 @@ export const initialState = {
   messages: {
     0: "Hello, Taylor", //draft for contactId = 0
     1: "Hello, Alice", //draft for contactId = 1
+    2: "Hello, Bob", //draft for contactId = 2
   },
 };
 
