@@ -1,44 +1,66 @@
-import Heading from "./Heading.js";
-import Section from "./Section.js";
-import "./index.css";
-import "./App3.css";
+import { useContext, useState } from "react";
+import { places } from "./data.js";
+import { getImageUrl } from "./utils.js";
+import { ImageContext } from "./Context.js";
 
-export default function ProfilePage() {
+export default function App() {
+  const [isLarge, setIsLarge] = useState(false);
+  const imageSize = isLarge ? 150 : 100;
+
   return (
-    <Section>
-      <Heading>My Profile</Heading>
-      <Post title="Hello traveller!" body="Read about my adventures." />
-      <AllPosts />
-    </Section>
+    <>
+      <label>
+        <input
+          type="checkbox"
+          checked={isLarge}
+          onChange={(e) => {
+            setIsLarge(e.target.checked);
+          }}
+        />
+        Use large images
+      </label>
+      <hr />
+
+      {/* // provide context */}
+      <ImageContext.Provider value={imageSize}>
+        <List />
+      </ImageContext.Provider>
+    </>
   );
 }
 
-function AllPosts() {
-  return (
-    <Section>
-      <Heading>Posts</Heading>
-      <RecentPosts />
-    </Section>
-  );
+function List() {
+  const listItems = places.map((place) => (
+    <li key={place.id}>
+      <Place place={place} />
+    </li>
+  ));
+  return <ul>{listItems}</ul>;
 }
 
-function RecentPosts() {
+function Place({ place }) {
   return (
-    <Section>
-      <Heading>Recent Posts</Heading>
-      <Post title="Flavors of Lisbon" body="...those pastéis de nata!" />
-      <Post title="Buenos Aires in the rhythm of tango" body="I loved it!" />
-    </Section>
-  );
-}
-
-function Post({ title, body }) {
-  return (
-    <Section isFancy={true}>
-      <Heading>{title}</Heading>
+    <>
+      <PlaceImage place={place} />
       <p>
-        <i>{body}</i>
+        <b>{place.name}</b>
+        {": " + place.description}
       </p>
-    </Section>
+    </>
+  );
+}
+
+function PlaceImage({ place }) {
+  // use context
+  const imageSize = useContext(ImageContext);
+
+  return (
+    <img
+      style={{ borderRadius: "20px", borderStyle: "dashed" }}
+      src={getImageUrl(place)}
+      alt={place.name}
+      width={imageSize}
+      height={imageSize}
+    />
   );
 }
