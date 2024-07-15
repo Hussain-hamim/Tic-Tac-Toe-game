@@ -1,5 +1,7 @@
 import Heading from "./Heading.js";
 import Section from "./Section.js";
+import "./index.css";
+import "./App3.css";
 
 export default function ProfilePage() {
   return (
