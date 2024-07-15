@@ -1,11 +1,11 @@
 import { useContext } from "react";
-import { LevelContext } from "./LevelContext";
+import { LevelContext } from "./LevelContext.js";
 
 export default function Heading({ children }) {
-  // use context
   const level = useContext(LevelContext);
-
   switch (level) {
+    case 0:
+      throw Error("Heading must be inside a Section!");
     case 1:
       return <h1>{children}</h1>;
     case 2:
