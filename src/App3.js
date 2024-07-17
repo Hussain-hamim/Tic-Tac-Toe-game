@@ -1,35 +1,24 @@
-import { useRef } from "react";
+import { useState, useRef } from "react";
 
-function DebouncedButton({ onClick, children }) {
-  let timeoutID = useRef(null);
-  return (
-    <button
-      onClick={() => {
-        clearTimeout(timeoutID);
-        timeoutID = setTimeout(() => {
-          onClick();
-        }, 1000);
-      }}
-    >
-      {children}
-    </button>
-  );
-}
+export default function Chat() {
+  const [text, setText] = useState("");
+  const textRef = useRef(null);
 
-export default function Dashboard() {
+  function handleChange(e) {
+    setText(e.target.value);
+    textRef.current = e.target.value;
+  }
+
+  function handleSend() {
+    setTimeout(() => {
+      alert("Sending: " + textRef.current);
+    }, 5000);
+  }
+
   return (
     <>
-      <DebouncedButton onClick={() => alert("Spaceship launched!")}>
-        Launch the spaceship
-      </DebouncedButton>
-      <br />
-      <DebouncedButton onClick={() => alert("Soup boiled!")}>
-        Boil the soup
-      </DebouncedButton>
-      <br />
-      <DebouncedButton onClick={() => alert("Lullaby sung!")}>
-        Sing a lullaby
-      </DebouncedButton>
+      <input value={text} onChange={handleChange} />
+      <button onClick={handleSend}>Send</button>
     </>
   );
 }
