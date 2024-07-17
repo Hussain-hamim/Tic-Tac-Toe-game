@@ -1,31 +1,11 @@
-import { useRef } from "react";
-import one from "./hamim2.jpg";
-import two from "./hamim2.jpg";
-import three from "./hhamim.jpg";
+import React, { useRef } from "react";
 
-export default function CatFriends() {
-  const firstCatRef = useRef(null);
-  const secondCatRef = useRef(null);
-  const thirdCatRef = useRef(null);
+const App3 = () => {
+  const one = useRef(null);
 
-  function handleScrollToFirstCat() {
-    firstCatRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-  }
-
-  function handleScrollToSecondCat() {
-    secondCatRef.current.scrollIntoView({
-      behavior: "smooth",
-      block: "nearest",
-      inline: "center",
-    });
-  }
-
-  function handleScrollToThirdCat() {
-    thirdCatRef.current.scrollIntoView({
+  function scroll() {
+    one.current.scrollIntoView({
+      //
       behavior: "smooth",
       block: "nearest",
       inline: "center",
@@ -34,69 +14,108 @@ export default function CatFriends() {
 
   return (
     <>
-      <nav>
-        <button onClick={handleScrollToFirstCat}>Tom</button>
-        <button onClick={handleScrollToSecondCat}>Maru</button>
-        <button onClick={handleScrollToThirdCat}>Jellylorum</button>
-      </nav>
+      <button onClick={scroll}>scroll</button>
+
       <div>
-        <ul>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={one}
-              alt="Tom"
-              ref={firstCatRef}
-            />
-          </li>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={two}
-              alt="Maru"
-              ref={secondCatRef}
-            />
-          </li>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={three}
-              alt="Jellylorum"
-              ref={thirdCatRef}
-            />
-          </li>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={three}
-              alt="Jellylorum"
-              ref={thirdCatRef}
-            />
-          </li>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={three}
-              alt="Jellylorum"
-              ref={thirdCatRef}
-            />
-          </li>
-          <li>
-            <img
-              width="50%"
-              height="400px"
-              src={three}
-              alt="Jellylorum"
-              ref={thirdCatRef}
-            />
-          </li>
-        </ul>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div style={{ color: "orchid" }} ref={one}>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
+      </div>
+      <div>
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci autem
+        qui vitae est voluptate perspiciatis totam reiciendis commodi iusto
+        deserunt, consequuntur reprehenderit dignissimos, neque suscipit eum
+        quisquam omnis. Suscipit, at. Earum quod totam culpa, ullam et
+        accusamus. Ab inventore repellendus nihil. Numquam, laudantium sint
+        corporis laboriosam, quis dolor, necessitatibus excepturi saepe eos
+        reiciendis molestiae quos aspernatur error a. Vel expedita nostrum ut
+        aspernatur magni reiciendis atque hic possimus totam aliquid. Tempora
+        incidunt eum ex similique. Blanditiis eos corporis, dolorem enim
+        cupiditate suscipit, saepe repellat magni voluptatum et consequuntur
+        assumenda nostrum nemo, commodi sapiente eveniet sunt impedit. Ipsa
+        sapiente at iusto?
       </div>
     </>
   );
-}
+};
+
+export default App3;
