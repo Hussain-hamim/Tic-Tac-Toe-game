@@ -1,30 +1,207 @@
-import { useState, useRef } from "react";
+import React, { useRef } from "react";
 
-export default function Chat() {
-  const [text, setText] = useState("");
-  const textRef = useRef(null);
+const App3 = () => {
+  const myRef = useRef();
 
-  function handleChange(e) {
-    setText(e.target.value);
-    textRef.current = e.target.value;
-  }
-
-  function handleSend() {
-    setTimeout(() => {
-      alert("Sending: " + textRef.current);
-    }, 5000);
+  function handleClick() {
+    myRef.current.scrollIntoView();
   }
 
   return (
     <>
-      <input value={text} onChange={handleChange} />
-      <button onClick={handleSend}>Send</button>
+      <button onClick={handleClick}>scroll</button>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div ref={myRef} style={{ color: "orchid" }}>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
+      <>
+        <div>
+          Lorem ipsum dolor sit amet consectetur adipisicing elit. Tenetur
+          obcaecati exercitationem atque amet aliquid, quisquam quae nesciunt
+          iusto ut veritatis fugiat perferendis, pariatur perspiciatis? Incidunt
+          placeat dolorem facere maxime ad quod cupiditate voluptatum. Iusto
+          eum, mollitia odio ipsam praesentium ipsum tempore culpa saepe minus
+          asperiores similique accusamus dolore numquam dolorum?
+        </div>
+      </>
     </>
   );
-}
+};
 
-/** State works like a snapshot, so you can’t read the latest
- *  state from an asynchronous operation like a timeout.
- *  However, you can keep the latest input text in a ref.
- *  A ref is mutable, so you can read the current
- * property at any time. */
+export default App3;
