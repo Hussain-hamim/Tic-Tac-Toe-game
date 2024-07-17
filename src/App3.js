@@ -22,3 +22,9 @@ export default function Chat() {
     </>
   );
 }
+
+/** State works like a snapshot, so you can’t read the latest
+ *  state from an asynchronous operation like a timeout.
+ *  However, you can keep the latest input text in a ref.
+ *  A ref is mutable, so you can read the current
+ * property at any time. */
