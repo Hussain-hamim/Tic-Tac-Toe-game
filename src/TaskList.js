@@ -1,52 +1,70 @@
 import { useState } from "react";
+import { useTasks, useTasksDispatch } from "./TasksContext";
 
-export default function TaskList({ todos, onChangeTodo, onDeleteTodo }) {
+export default function TaskList() {
+  const tasks = useTasks();
+
   return (
     <ul>
-      {todos.map((todo) => (
-        <li key={todo.id}>
-          <Task todo={todo} onChange={onChangeTodo} onDelete={onDeleteTodo} />
+      {tasks.map((task) => (
+        <li key={task.id}>
+          <Task task={task} />
         </li>
       ))}
     </ul>
   );
 }
 
-function Task({ todo, onChange, onDelete }) {
-  const [isEditing, setIsEditing] = useState(false);
+function Task({ task }) {
+  const dispatch = useTasksDispatch();
 
-  let todoContent;
+  const [isEditing, setIsEditing] = useState(false);
+  let taskContent;
   if (isEditing) {
-    todoContent = (
+    taskContent = (
       <>
         <input
-          type="text"
-          value={todo.title}
+          value={task.text}
           onChange={(e) => {
-            onChange({ ...todo, title: e.target.value });
+            dispatch({
+              type: "changed",
+              task: {
+                ...task,
+                text: e.target.value,
+              },
+            });
           }}
         />
         <button onClick={() => setIsEditing(false)}>Save</button>
       </>
     );
   } else {
-    todoContent = (
+    taskContent = (
       <>
-        {todo.title}
+        {task.text}
         <button onClick={() => setIsEditing(true)}>Edit</button>
       </>
     );
   }
-
   return (
     <label>
       <input
         type="checkbox"
-        value={todo.done}
-        onChange={(e) => onChange({ ...todo, done: e.target.checked })}
+        checked={task.done}
+        onChange={(e) => {
+          dispatch({
+            type: "changed",
+            task: {
+              ...task,
+              done: e.target.checked,
+            },
+          });
+        }}
       />
-      {todoContent}
-      <button onClick={() => onDelete(todo.id)}>Delete</button>
+      {taskContent}
+      <button onClick={() => dispatch({ type: "deleted", id: task.id })}>
+        Delete
+      </button>
     </label>
   );
 }
