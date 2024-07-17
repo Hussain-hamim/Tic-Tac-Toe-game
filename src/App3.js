@@ -1,34 +1,33 @@
-import { useRef, useState } from "react";
+import { useState, useRef } from "react";
 
 export default function Chat() {
   const [text, setText] = useState("");
   const [isSending, setIsSending] = useState(false);
-  let timeoutID = useRef(null);
+  const timeoutRef = useRef(null);
 
   function handleSend() {
     setIsSending(true);
-    timeoutID.current = setTimeout(() => {
-      alert("sent!");
+    timeoutRef.current = setTimeout(() => {
+      alert("Sent!");
       setIsSending(false);
     }, 3000);
   }
 
   function handleUndo() {
     setIsSending(false);
-    clearTimeout(timeoutID.current);
+    clearTimeout(timeoutRef.current);
   }
 
   return (
     <>
       <input
-        type="text"
+        disabled={isSending}
         value={text}
         onChange={(e) => setText(e.target.value)}
       />
-      <button onClick={handleSend} disabled={isSending}>
+      <button disabled={isSending} onClick={handleSend}>
         {isSending ? "Sending..." : "Send"}
       </button>
-
       {isSending && <button onClick={handleUndo}>Undo</button>}
     </>
   );
