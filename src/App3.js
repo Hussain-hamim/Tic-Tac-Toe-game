@@ -1,26 +1,33 @@
 import { useState, useRef } from "react";
+import second from "./quran.mp4";
 
-export default function Counter() {
-  const [show, setShow] = useState(true);
+export default function VideoPlayer() {
+  const [isPlaying, setIsPlaying] = useState(false);
   const ref = useRef(null);
 
+  function handleClick() {
+    const nextIsPlaying = !isPlaying;
+    setIsPlaying(nextIsPlaying);
+    if (!isPlaying) {
+      ref.current.play();
+    } else {
+      ref.current.pause();
+    }
+  }
+
   return (
-    <div>
-      <button
-        onClick={() => {
-          setShow(!show);
-        }}
+    <>
+      <button onClick={handleClick}>{isPlaying ? "Pause" : "Play"}</button>
+      <hr />
+      <video
+        onPlay={() => setIsPlaying(true)}
+        onPause={() => setIsPlaying(false)}
+        controls
+        ref={ref}
+        width="250"
       >
-        Toggle with setState
-      </button>
-      <button
-        onClick={() => {
-          ref.current.remove();
-        }}
-      >
-        Remove from the DOM
-      </button>
-      {show && <p ref={ref}>Hello world</p>}
-    </div>
+        <source src={second} type="video/mp4" />
+      </video>
+    </>
   );
 }
