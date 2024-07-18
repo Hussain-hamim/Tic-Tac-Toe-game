@@ -1,33 +1,19 @@
-import { useState, useRef } from "react";
-import second from "./quran.mp4";
+import { useRef } from "react";
 
-export default function VideoPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const ref = useRef(null);
-
-  function handleClick() {
-    const nextIsPlaying = !isPlaying;
-    setIsPlaying(nextIsPlaying);
-    if (!isPlaying) {
-      ref.current.play();
-    } else {
-      ref.current.pause();
-    }
-  }
-
+export default function Page() {
+  const inputRef = useRef(null);
   return (
     <>
-      <button onClick={handleClick}>{isPlaying ? "Pause" : "Play"}</button>
-      <hr />
-      <video
-        onPlay={() => setIsPlaying(true)}
-        onPause={() => setIsPlaying(false)}
-        controls
-        ref={ref}
-        width="250"
-      >
-        <source src={second} type="video/mp4" />
-      </video>
+      <nav>
+        <button
+          onClick={() => {
+            inputRef.current.focus();
+          }}
+        >
+          Search
+        </button>
+      </nav>
+      <input ref={inputRef} placeholder="Looking for something?" />
     </>
   );
 }
