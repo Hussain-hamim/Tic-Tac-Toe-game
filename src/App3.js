@@ -9,6 +9,7 @@ export default function Form() {
 
   function handleClick() {
     inputRef.current.focus();
+    inputRef.current.style.backgroundColor = "orchid";
   }
 
   return (
