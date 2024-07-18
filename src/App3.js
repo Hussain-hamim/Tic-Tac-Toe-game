@@ -24,3 +24,7 @@ function SearchButton({ clickfn }) {
 const SearchInput = forwardRef(function SearchInput(props, ref) {
   return <input ref={ref} />;
 });
+
+const SI = forwardRef((props, ref) => {
+  return <input ref={ref} />;
+});
