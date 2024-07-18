@@ -1,54 +1,26 @@
-import { useRef, useState } from "react";
-import second from "./hhamim.jpg";
-import { flushSync } from "react-dom";
+import { forwardRef, useRef } from "react";
 
-export default function CatFriends() {
-  const [index, setIndex] = useState(0);
+export default function Page() {
   const ref = useRef(null);
+
+  function handleClick() {
+    ref.current.focus();
+  }
 
   return (
     <>
       <nav>
-        <button
-          onClick={() => {
-            flushSync(() => {
-              if (index < catList.length - 1) {
-                setIndex(index + 1);
-              } else {
-                setIndex(0);
-              }
-            });
-            ref.current.scrollIntoView({
-              behavior: "smooth",
-              block: "nearest",
-              inline: "center",
-            });
-          }}
-        >
-          Next
-        </button>
+        <SearchButton clickfn={handleClick} />
       </nav>
-      <div>
-        <ul>
-          {catList.map((cat, i) => (
-            <li ref={index === i ? ref : null} key={cat.id}>
-              <img
-                className={index === i ? "active" : ""}
-                src={cat.imageUrl}
-                alt={"Cat #" + cat.id}
-              />
-            </li>
-          ))}
-        </ul>
-      </div>
+      <SearchInput ref={ref} />
     </>
   );
 }
 
-const catList = [];
-for (let i = 0; i < 10; i++) {
-  catList.push({
-    id: i,
-    imageUrl: second,
-  });
+function SearchButton({ clickfn }) {
+  return <button onClick={clickfn}>Search</button>;
 }
+
+const SearchInput = forwardRef(function SearchInput(props, ref) {
+  return <input ref={ref} />;
+});
