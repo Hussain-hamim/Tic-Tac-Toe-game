@@ -3,11 +3,20 @@ import { createConnection } from "./chat2";
 
 const App3 = () => {
   useEffect(() => {
-    function handleScroll(e) {
-      console.log(window.scrollX, window.scrollY);
+    let ignore = false;
+
+    async function startFetching() {
+      const json = await fetchTodos(userId);
+      if (!ignore) {
+        setTodos(json);
+      }
     }
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    startFetching();
+
+    return () => {
+      ignore = true;
+    };
   }, []);
 
   return <div>welcome to the chat</div>;
