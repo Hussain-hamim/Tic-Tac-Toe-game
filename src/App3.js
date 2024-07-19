@@ -1,30 +1,33 @@
-import { forwardRef, useRef } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import second from "./quran.mp4";
 
-export default function Page() {
-  const ref = useRef(null);
-
-  function handleClick() {
-    ref.current.focus();
-  }
+const App3 = () => {
+  const [isPlaying, setIsPlaying] = useState(false);
 
   return (
-    <>
-      <nav>
-        <SearchButton clickfn={handleClick} />
-      </nav>
-      <SearchInput ref={ref} />
-    </>
+    <div>
+      <button onClick={() => setIsPlaying(!isPlaying)}>
+        {isPlaying ? "Pause" : "Play"}
+      </button>
+      <VideoPlayer isPlaying={isPlaying} src={second} />
+    </div>
   );
+};
+export default App3;
+
+function VideoPlayer({ src, isPlaying }) {
+  const ref = useRef(null);
+
+  //wrap the side effect with useEffect to move it out of
+  // the rendering calculation
+  useEffect(() => {
+    if (isPlaying) {
+      ref.current.play();
+    } else {
+      ref.current.pause();
+    }
+  });
+
+  // TODO: do something here
+  return <video width={"200px"} ref={ref} src={src} />;
 }
-
-function SearchButton({ clickfn }) {
-  return <button onClick={clickfn}>Search</button>;
-}
-
-const SearchInput = forwardRef(function SearchInput(props, ref) {
-  return <input ref={ref} />;
-});
-
-const SI = forwardRef((props, ref) => {
-  return <input ref={ref} />;
-});
