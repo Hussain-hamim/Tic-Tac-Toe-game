@@ -1,25 +1,42 @@
-import React, { useEffect } from "react";
-import { createConnection } from "./chat2";
+import { useState, useEffect } from "react";
 
-const App3 = () => {
+function Playground() {
+  const [text, setText] = useState("a");
+
   useEffect(() => {
-    let ignore = false;
-
-    async function startFetching() {
-      const json = await fetchTodos(userId);
-      if (!ignore) {
-        setTodos(json);
-      }
+    function onTimeout() {
+      console.log("⏰ " + text);
     }
 
-    startFetching();
+    console.log('🔵 Schedule "' + text + '" log');
+    const timeoutId = setTimeout(onTimeout, 3000);
 
     return () => {
-      ignore = true;
+      console.log('🟡 Cancel "' + text + '" log');
+      clearTimeout(timeoutId);
     };
-  }, []);
+  }, [text]);
 
-  return <div>welcome to the chat</div>;
-};
+  return (
+    <>
+      <label>
+        What to log:{" "}
+        <input value={text} onChange={(e) => setText(e.target.value)} />
+      </label>
+      <h1>{text}</h1>
+    </>
+  );
+}
 
-export default App3;
+export default function App() {
+  const [show, setShow] = useState(false);
+  return (
+    <>
+      <button onClick={() => setShow(!show)}>
+        {show ? "Unmount" : "Mount"} the component
+      </button>
+      {show && <hr />}
+      {show && <Playground />}
+    </>
+  );
+}
