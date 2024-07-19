@@ -2,6 +2,7 @@ import React, { useEffect, useRef, useState } from "react";
 
 const App3 = () => {
   const [text, setText] = useState("");
+  const [focus, setFocus] = useState(false);
 
   function handleChange(e) {
     setText(e.target.value);
@@ -9,19 +10,22 @@ const App3 = () => {
 
   return (
     <div>
-      <MyInput value={text} onChange={handleChange} />
+      <MyInput shouldFocus={!focus} value={text} onChange={handleChange} />
+      <MyInput shouldFocus={focus} value={text} onChange={handleChange} />
+      <button onClick={() => setFocus(true)}>Focus</button>
     </div>
   );
 };
-
 export default App3;
 
-const MyInput = ({ value, onChange }) => {
+const MyInput = ({ shouldFocus, value, onChange }) => {
   const ref = useRef(null);
 
   useEffect(() => {
-    ref.current.focus();
-  }, []);
+    if (shouldFocus) {
+      ref.current.focus();
+    }
+  }, [shouldFocus]);
 
   return (
     <div>
