@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { fetchBio } from "./api.js";
 
 export default function Page() {
-  const [person, setPerson] = useState("Alice");
+  const [person, setPerson] = useState("Hussain");
   const [bio, setBio] = useState(null);
   useEffect(() => {
     let ignore = false;
@@ -27,9 +27,9 @@ export default function Page() {
           setPerson(e.target.value);
         }}
       >
-        <option value="Alice">Alice</option>
-        <option value="Bob">Bob</option>
-        <option value="Taylor">Taylor</option>
+        <option value="Hussain">Hussain</option>
+        <option value="Hamim">Hamim</option>
+        <option value="Haroon">Haroon</option>
       </select>
       <hr />
       <p>
