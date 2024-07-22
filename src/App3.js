@@ -1,51 +1,45 @@
 import { useState } from "react";
 
-export default function EditContact(props) {
-  return <EditForm {...props} key={props.savedContact.id} />;
-}
+export default function Form() {
+  const [showForm, setShowForm] = useState(true);
+  const [message, setMessage] = useState("");
 
-function EditForm({ savedContact, onSave }) {
-  const [name, setName] = useState(savedContact.name);
-  const [email, setEmail] = useState(savedContact.email);
+  function handleSubmit(e) {
+    e.preventDefault();
+    setShowForm(false);
+    sendMessage(message);
+  }
+
+  if (!showForm) {
+    return (
+      <>
+        <h1>Thanks for using our services!</h1>
+        <button
+          onClick={() => {
+            setMessage("");
+            setShowForm(true);
+          }}
+        >
+          Open chat
+        </button>
+      </>
+    );
+  }
 
   return (
-    <section>
-      <label>
-        Name:{" "}
-        <input
-          type="text"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-      </label>
-      <label>
-        Email:{" "}
-        <input
-          type="email"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </label>
-      <button
-        onClick={() => {
-          const updatedData = {
-            id: savedContact.id,
-            name: name,
-            email: email,
-          };
-          onSave(updatedData);
-        }}
-      >
-        Save
+    <form onSubmit={handleSubmit}>
+      <textarea
+        placeholder="Message"
+        value={message}
+        onChange={(e) => setMessage(e.target.value)}
+      />
+      <button type="submit" disabled={message === ""}>
+        Send
       </button>
-      <button
-        onClick={() => {
-          setName(savedContact.name);
-          setEmail(savedContact.email);
-        }}
-      >
-        Reset
-      </button>
-    </section>
+    </form>
   );
+}
+
+function sendMessage(message) {
+  console.log("Sending message: " + message);
 }
