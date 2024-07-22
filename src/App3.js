@@ -25,3 +25,4 @@ export default function App() {
     </>
   );
 }
+// All variables declared in the component body are reactive
