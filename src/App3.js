@@ -1,42 +1,51 @@
-import { useState, useEffect, useMemo } from "react";
-import { initialTodos, createTodo, getVisibleTodos } from "./todos.js";
+import { useState } from "react";
 
-export default function TodoList() {
-  const [todos, setTodos] = useState(initialTodos);
-  const [showActive, setShowActive] = useState(false);
-  const [text, setText] = useState("");
+export default function EditContact(props) {
+  return <EditForm {...props} key={props.savedContact.id} />;
+}
 
-  const visibleTodos = useMemo(
-    () => getVisibleTodos(todos, showActive),
-    [todos, showActive]
-  );
-
-  function handleAddClick() {
-    setText("");
-    setTodos([...todos, createTodo(text)]);
-  }
+function EditForm({ savedContact, onSave }) {
+  const [name, setName] = useState(savedContact.name);
+  const [email, setEmail] = useState(savedContact.email);
 
   return (
-    <>
+    <section>
       <label>
+        Name:{" "}
         <input
-          type="checkbox"
-          checked={showActive}
-          onChange={(e) => {
-            setShowActive(e.target.checked);
-          }}
+          type="text"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
         />
-        Show only active todos
       </label>
-      <input value={text} onChange={(e) => setText(e.target.value)} />
-      <button onClick={handleAddClick}>Add</button>
-      <ul>
-        {visibleTodos.map((todo) => (
-          <li key={todo.id}>
-            {todo.completed ? <s>{todo.text}</s> : todo.text}
-          </li>
-        ))}
-      </ul>
-    </>
+      <label>
+        Email:{" "}
+        <input
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+        />
+      </label>
+      <button
+        onClick={() => {
+          const updatedData = {
+            id: savedContact.id,
+            name: name,
+            email: email,
+          };
+          onSave(updatedData);
+        }}
+      >
+        Save
+      </button>
+      <button
+        onClick={() => {
+          setName(savedContact.name);
+          setEmail(savedContact.email);
+        }}
+      >
+        Reset
+      </button>
+    </section>
   );
 }
