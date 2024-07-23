@@ -1,29 +1,23 @@
-import { useState } from "react";
+export function createEncryptedConnection(roomId) {
+  // A real implementation would actually connect to the server
+  return {
+    connect() {
+      console.log('✅ 🔐 Connecting to "' + roomId + "... (encrypted)");
+    },
+    disconnect() {
+      console.log('❌ 🔐 Disconnected from "' + roomId + '" room (encrypted)');
+    },
+  };
+}
 
-export default function Chat({ contact, message, dispatch }) {
-  return (
-    <section className="chat">
-      <textarea
-        value={message}
-        placeholder={"Chat to " + contact.name}
-        onChange={(e) => {
-          // TODO: dispatch edited_message
-          // (Read the input value from e.target.value)
-          dispatch({ type: "edited_message", message: e.target.value });
-        }}
-      />
-      <br />
-      <button
-        onClick={() => {
-          alert("sending " + message + " to " + contact.email);
-          dispatch({
-            type: "send",
-            message: "",
-          });
-        }}
-      >
-        Send to {contact.email}
-      </button>
-    </section>
-  );
+export function createUnencryptedConnection(roomId) {
+  // A real implementation would actually connect to the server
+  return {
+    connect() {
+      console.log('✅ Connecting to "' + roomId + "... (unencrypted)");
+    },
+    disconnect() {
+      console.log('❌ Disconnected from "' + roomId + '" room (unencrypted)');
+    },
+  };
 }
