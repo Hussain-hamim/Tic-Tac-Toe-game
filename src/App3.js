@@ -1,28 +1,39 @@
 import { useState, useEffect } from "react";
-import { createConnection } from "./chat.js";
+import { createConnection } from "./chat3.js";
 
 const serverUrl = "https://localhost:1234";
-const roomId = "general";
 
-function ChatRoom() {
+function ChatRoom({ roomId }) {
+  const [message, setMessage] = useState("");
+
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
     connection.connect();
     return () => connection.disconnect();
-  }, []);
-  return <h1>Welcome to the {roomId} room!</h1>;
-}
+  }, [roomId]);
 
-export default function App() {
-  const [show, setShow] = useState(false);
   return (
     <>
-      <button onClick={() => setShow(!show)}>
-        {show ? "Close chat" : "Open chat"}
-      </button>
-      {show && <hr />}
-      {show && <ChatRoom />}
+      <h1>Welcome to the {roomId} room!</h1>
+      <input value={message} onChange={(e) => setMessage(e.target.value)} />
     </>
   );
 }
-// All variables declared in the component body are reactive
+
+export default function App() {
+  const [roomId, setRoomId] = useState("general");
+  return (
+    <>
+      <label>
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
+      </label>
+      <hr />
+      <ChatRoom roomId={roomId} />
+    </>
+  );
+}
