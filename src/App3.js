@@ -4,20 +4,27 @@ import { experimental_useEffectEvent as useEffectEvent } from "react";
 export default function Timer() {
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
+  const [delay, setDelay] = useState(100);
 
-  const onTick = useEffectEvent(() => {
-    setCount((c) => c + increment);
-  });
+  // const onTick = useEffectEvent(() => {
+  //   setCount((c) => c + increment);
+  // });
+
+  // const onMount = useEffectEvent(() => {
+  //   return setInterval(() => {
+  //     onTick();
+  //   }, delay);
+  // });
 
   useEffect(() => {
     const id = setInterval(() => {
-      onTick();
-    }, 1000);
+      setCount((c) => c + increment);
+    }, delay);
 
     return () => {
       clearInterval(id);
     };
-  }, []);
+  }, [delay, increment]);
 
   return (
     <>
@@ -27,7 +34,7 @@ export default function Timer() {
       </h1>
       <hr />
       <p>
-        Every second, increment by:
+        Increment by:
         <button
           disabled={increment === 0}
           onClick={() => {
@@ -43,6 +50,25 @@ export default function Timer() {
           }}
         >
           +
+        </button>
+      </p>
+      <p>
+        Increment delay:
+        <button
+          disabled={delay === 100}
+          onClick={() => {
+            setDelay((d) => d - 100);
+          }}
+        >
+          –100 ms
+        </button>
+        <b>{delay} ms</b>
+        <button
+          onClick={() => {
+            setDelay((d) => d + 100);
+          }}
+        >
+          +100 ms
         </button>
       </p>
     </>
