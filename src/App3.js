@@ -1,46 +1,47 @@
 import { useState, useEffect } from "react";
-import { experimental_useEffectEvent as useEffectEvent } from "react";
 
-export default function App() {
-  const [position, setPosition] = useState({ x: 0, y: 0 });
-  const [canMove, setCanMove] = useState(true);
-
-  const onMove = useEffectEvent((e) => {
-    if (canMove) {
-      setPosition({ x: e.clientX, y: e.clientY });
-    }
-  });
+export default function Timer() {
+  const [count, setCount] = useState(0);
+  const [increment, setIncrement] = useState(1);
 
   useEffect(() => {
-    window.addEventListener("pointermove", onMove);
-    return () => window.removeEventListener("pointermove", onMove);
-  }, []);
+    const id = setInterval(() => {
+      setCount((c) => c + increment);
+    }, 1000);
+
+    // cleanup fn
+    return () => {
+      clearInterval(id);
+    };
+  }, [increment]); // remove linter suppression
 
   return (
     <>
-      <label>
-        <input
-          type="checkbox"
-          checked={canMove}
-          onChange={(e) => setCanMove(e.target.checked)}
-        />
-        The dot is allowed to move
-      </label>
+      <h1>
+        Counter: {count}
+        <button onClick={() => setCount(0)}>Reset</button>
+      </h1>
       <hr />
-      <div
-        style={{
-          position: "absolute",
-          backgroundColor: "pink",
-          borderRadius: "50%",
-          opacity: 0.6,
-          transform: `translate(${position.x}px, ${position.y}px)`,
-          pointerEvents: "none",
-          left: -20,
-          top: -20,
-          width: 40,
-          height: 40,
-        }}
-      />
+
+      <p>
+        Every second, increment by:
+        <button
+          disabled={increment === 0}
+          onClick={() => {
+            setIncrement((i) => i - 1);
+          }}
+        >
+          –
+        </button>
+        <b>{increment}</b>
+        <button
+          onClick={() => {
+            setIncrement((i) => i + 1);
+          }}
+        >
+          +
+        </button>
+      </p>
     </>
   );
 }
