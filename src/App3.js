@@ -1,50 +1,46 @@
 import { useState, useEffect } from "react";
 import { experimental_useEffectEvent as useEffectEvent } from "react";
-import { createConnection, sendMessage } from "./chat.js";
-import { showNotification } from "./notifications.js";
 
-const serverUrl = "https://localhost:1234";
+export default function App() {
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [canMove, setCanMove] = useState(true);
 
-function ChatRoom({ roomId, theme }) {
-  const onConnected = useEffectEvent(() => {
-    showNotification("Connected!", theme);
+  const onMove = useEffectEvent((e) => {
+    if (canMove) {
+      setPosition({ x: e.clientX, y: e.clientY });
+    }
   });
 
   useEffect(() => {
-    const connection = createConnection(serverUrl, roomId);
-    connection.on("connected", () => {
-      onConnected();
-    });
-    connection.connect();
-    return () => connection.disconnect();
-  }, [roomId]);
+    window.addEventListener("pointermove", onMove);
+    return () => window.removeEventListener("pointermove", onMove);
+  }, []);
 
-  return <h1>Welcome to the {roomId} room!</h1>;
-}
-
-export default function App() {
-  const [roomId, setRoomId] = useState("general");
-  const [isDark, setIsDark] = useState(false);
   return (
     <>
       <label>
-        Choose the chat room:{" "}
-        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-          <option value="general">general</option>
-          <option value="travel">travel</option>
-          <option value="music">music</option>
-        </select>
-      </label>
-      <label>
         <input
           type="checkbox"
-          checked={isDark}
-          onChange={(e) => setIsDark(e.target.checked)}
+          checked={canMove}
+          onChange={(e) => setCanMove(e.target.checked)}
         />
-        Use dark theme
+        The dot is allowed to move
       </label>
       <hr />
-      <ChatRoom roomId={roomId} theme={isDark ? "dark" : "light"} />
+      <div
+        style={{
+          position: "absolute",
+          backgroundColor: "pink",
+          borderRadius: "50%",
+          opacity: 0.6,
+          transform: `translate(${position.x}px, ${position.y}px)`,
+          pointerEvents: "none",
+          left: -20,
+          top: -20,
+          width: 40,
+          height: 40,
+        }}
+      />
     </>
   );
 }
