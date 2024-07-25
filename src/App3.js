@@ -1,48 +1,50 @@
-import { useSelectOptions } from "./useSelectOptions.js";
+import { useState, useEffect } from "react";
+import { experimental_useEffectEvent as useEffectEvent } from "react";
+import { createConnection, sendMessage } from "./chat.js";
+import { showNotification } from "./notifications.js";
 
-export default function Page() {
-  const [planetList, planetId, setPlanetId] = useSelectOptions("/planets");
+const serverUrl = "https://localhost:1234";
 
-  const [placeList, placeId, setPlaceId] = useSelectOptions(
-    planetId ? `/planets/${planetId}/places` : null
-  );
+function ChatRoom({ roomId, theme }) {
+  const onConnected = useEffectEvent(() => {
+    showNotification("Connected!", theme);
+  });
 
+  useEffect(() => {
+    const connection = createConnection(serverUrl, roomId);
+    connection.on("connected", () => {
+      onConnected();
+    });
+    connection.connect();
+    return () => connection.disconnect();
+  }, [roomId]);
+
+  return <h1>Welcome to the {roomId} room!</h1>;
+}
+
+export default function App() {
+  const [roomId, setRoomId] = useState("general");
+  const [isDark, setIsDark] = useState(false);
   return (
     <>
       <label>
-        Pick a planet:{" "}
-        <select
-          value={planetId}
-          onChange={(e) => {
-            setPlanetId(e.target.value);
-          }}
-        >
-          {planetList?.map((planet) => (
-            <option key={planet.id} value={planet.id}>
-              {planet.name}
-            </option>
-          ))}
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
         </select>
       </label>
       <label>
-        Pick a place:{" "}
-        <select
-          value={placeId}
-          onChange={(e) => {
-            setPlaceId(e.target.value);
-          }}
-        >
-          {placeList?.map((place) => (
-            <option key={place.id} value={place.id}>
-              {place.name}
-            </option>
-          ))}
-        </select>
+        <input
+          type="checkbox"
+          checked={isDark}
+          onChange={(e) => setIsDark(e.target.checked)}
+        />
+        Use dark theme
       </label>
       <hr />
-      <p>
-        You are going to: {placeId || "..."} on {planetId || "..."}{" "}
-      </p>
+      <ChatRoom roomId={roomId} theme={isDark ? "dark" : "light"} />
     </>
   );
 }

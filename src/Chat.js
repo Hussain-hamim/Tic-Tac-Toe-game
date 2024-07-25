@@ -1,23 +1,29 @@
-export function createEncryptedConnection(roomId) {
+export function createConnection(serverUrl, roomId) {
   // A real implementation would actually connect to the server
-  return {
-    connect() {
-      console.log('✅ 🔐 Connecting to "' + roomId + "... (encrypted)");
-    },
-    disconnect() {
-      console.log('❌ 🔐 Disconnected from "' + roomId + '" room (encrypted)');
-    },
-  };
-}
+  let connectedCallback;
+  let timeout;
 
-export function createUnencryptedConnection(roomId) {
-  // A real implementation would actually connect to the server
   return {
     connect() {
-      console.log('✅ Connecting to "' + roomId + "... (unencrypted)");
+      timeout = setTimeout(() => {
+        if (connectedCallback) {
+          connectedCallback();
+        }
+      }, 100);
     },
+
+    on(event, callback) {
+      if (connectedCallback) {
+        throw Error("Cannot add the handler twice.");
+      }
+      if (event !== "connected") {
+        throw Error('Only "connected" event is supported.');
+      }
+      connectedCallback = callback;
+    },
+
     disconnect() {
-      console.log('❌ Disconnected from "' + roomId + '" room (unencrypted)');
+      clearTimeout(timeout);
     },
   };
 }
