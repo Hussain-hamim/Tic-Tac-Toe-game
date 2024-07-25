@@ -1,19 +1,23 @@
 import { useState, useEffect } from "react";
+import { experimental_useEffectEvent as useEffectEvent } from "react";
 
 export default function Timer() {
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
 
+  const onTick = useEffectEvent(() => {
+    setCount((c) => c + increment);
+  });
+
   useEffect(() => {
     const id = setInterval(() => {
-      setCount((c) => c + increment);
+      onTick();
     }, 1000);
 
-    // cleanup fn
     return () => {
       clearInterval(id);
     };
-  }, [increment]); // remove linter suppression
+  }, []);
 
   return (
     <>
@@ -22,7 +26,6 @@ export default function Timer() {
         <button onClick={() => setCount(0)}>Reset</button>
       </h1>
       <hr />
-
       <p>
         Every second, increment by:
         <button
