@@ -1,44 +1,49 @@
 import { useState, useEffect } from "react";
+import { createConnection } from "./chat.js";
 
-export default function Timer() {
-  const [count, setCount] = useState(0);
-  const [increment, setIncrement] = useState(1);
+const serverUrl = "https://localhost:1234";
+
+function ChatRoom({ roomId }) {
+  const [message, setMessage] = useState("");
+
+  // Temporarily disable the linter to demonstrate the problem
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const options = {
+    serverUrl: serverUrl,
+    roomId: roomId,
+  };
+
+  /** Object and function dependencies can make your
+   * Effect re-synchronize more often than you need. */
 
   useEffect(() => {
-    function onTick() {
-      setCount(count + increment);
-    }
-
-    const id = setInterval(onTick, 1000);
-    return () => clearInterval(id);
-  }, [count, increment]); // remove the linter suppressing
+    const connection = createConnection(options);
+    connection.connect();
+    return () => connection.disconnect();
+  }, [options]);
 
   return (
     <>
-      <h1>
-        Counter: {count}
-        <button onClick={() => setCount(0)}>Reset</button>
-      </h1>
+      <h1>Welcome to the {roomId} room!</h1>
+      <input value={message} onChange={(e) => setMessage(e.target.value)} />
+    </>
+  );
+}
+
+export default function App() {
+  const [roomId, setRoomId] = useState("general");
+  return (
+    <>
+      <label>
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
+      </label>
       <hr />
-      <p>
-        Every second, increment by:
-        <button
-          disabled={increment === 0}
-          onClick={() => {
-            setIncrement((i) => i - 1);
-          }}
-        >
-          –
-        </button>
-        <b>{increment}</b>
-        <button
-          onClick={() => {
-            setIncrement((i) => i + 1);
-          }}
-        >
-          +
-        </button>
-      </p>
+      <ChatRoom roomId={roomId} />
     </>
   );
 }
