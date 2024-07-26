@@ -3,10 +3,6 @@ import { createConnection } from "./chat.js";
 
 const serverUrl = "https://localhost:1234";
 
-const options = {
-  serverUrl: serverUrl,
-  roomId: "music",
-};
 function ChatRoom({ roomId }) {
   const [message, setMessage] = useState("");
 
@@ -17,10 +13,15 @@ function ChatRoom({ roomId }) {
    * Effect re-synchronize more often than you need. */
 
   useEffect(() => {
+    const options = {
+      serverUrl: serverUrl,
+      roomId: roomId,
+    };
+
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, []);
+  }, [roomId]);
 
   return (
     <>
