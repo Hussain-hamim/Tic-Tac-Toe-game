@@ -1,10 +1,10 @@
 import { useState, useEffect } from "react";
 import { createConnection } from "./chat.js";
 
-function ChatRoom({ options }) {
+function ChatRoom({ getOptions }) {
   const [message, setMessage] = useState("");
 
-  const { roomId, serverUrl } = options;
+  const { roomId, serverUrl } = getOptions();
 
   useEffect(() => {
     const connection = createConnection({
