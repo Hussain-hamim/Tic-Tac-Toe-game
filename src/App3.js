@@ -6,6 +6,11 @@ function ChatRoom({ getOptions }) {
 
   const { roomId, serverUrl } = getOptions();
 
+  /**This only works for pure functions because they are safe to call
+   *  during rendering. If your function is an event handler,
+   *  but you don’t want its changes to re-synchronize your Effect,
+   *  wrap it into an Effect Event instead. */
+
   useEffect(() => {
     const connection = createConnection({
       roomId: roomId,
