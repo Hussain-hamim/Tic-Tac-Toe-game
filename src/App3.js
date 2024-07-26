@@ -11,6 +11,13 @@ function ChatRoom({ theme }) {
     showNotification("Welcome to " + connectedRoomId, theme);
   });
 
+  /** The last part is important. If you want to change the dependencies,
+   * change the surrounding code first. You can think of the
+   *  dependency list as a list of all the reactive values
+   * used by your Effect’s code. You don’t choose what to
+   *  put on that list. The list describes your code.
+   *  To change the dependency list, change the code. */
+
   useEffect(() => {
     const connection = createConnection(serverUrl, roomId);
     let notificationTimeoutId;
