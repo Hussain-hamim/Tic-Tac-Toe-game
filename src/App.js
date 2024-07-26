@@ -1,64 +1,41 @@
-import { useState, useEffect, useRef } from "react";
-import { experimental_useEffectEvent as useEffectEvent } from "react";
-import { FadeInAnimation } from "./animation.js";
-
-function Welcome({ duration }) {
-  const ref = useRef(null);
-
-  // const onAppear = useEffectEvent((animation) => {
-  //   animation.start(duration);
-  // });
-
-  useEffect(() => {
-    const animation = new FadeInAnimation(ref.current);
-
-    animation.start(duration);
-    // onAppear(animation);
-
-    return () => {
-      animation.stop();
-    };
-  }, [duration]);
-
-  return (
-    <h1
-      ref={ref}
-      style={{
-        opacity: 0,
-        color: "white",
-        padding: 50,
-        textAlign: "center",
-        fontSize: 50,
-
-        backgroundImage:
-          "radial-gradient(circle, rgba(63,94,251,1) 0%, rgba(252,70,107,1) 100%)",
-      }}
-    >
-      Welcome
-    </h1>
-  );
-}
+import { useState } from "react";
+import ChatRoom from "./ChatRoom.js";
+import "./App.css";
 
 export default function App() {
-  const [duration, setDuration] = useState(1000);
-  const [show, setShow] = useState(false);
+  const [isDark, setIsDark] = useState(false);
+  const [roomId, setRoomId] = useState("general");
+  const [serverUrl, setServerUrl] = useState("https://localhost:1234");
+
+  const options = {
+    serverUrl: serverUrl,
+    roomId: roomId,
+  };
 
   return (
-    <>
+    <div className={isDark ? "dark" : "light"}>
+      <button onClick={() => setIsDark(!isDark)}>Toggle theme</button>
+      <br />
+      <br />
       <label>
+        Server URL:{" "}
         <input
-          type="range"
-          min="100"
-          max="3000"
-          value={duration}
-          onChange={(e) => setDuration(Number(e.target.value))}
+          value={serverUrl}
+          onChange={(e) => setServerUrl(e.target.value)}
         />
-        <br />
-        Fade in duration: {duration} ms
       </label>
-      <button onClick={() => setShow(!show)}>{show ? "Remove" : "Show"}</button>
       <hr />
-      {show && <Welcome duration={duration} />}
-    </>
+      <br />
+      <label>
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
+      </label>
+      <hr />
+      <ChatRoom options={options} />
+    </div>
   );
 }

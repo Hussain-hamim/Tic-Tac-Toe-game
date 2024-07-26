@@ -1,34 +1,17 @@
-import { useEffect, useState, useEffectEvent } from "react";
+import { useEffect } from "react";
+import { createConnection } from "./chat.js";
 
-function ChatRoom({ roomId, createConnection, onReceivedMessages }) {
-  const [messages, setMessages] = useState([]);
-  const [isMuted, setIsMuted] = useState(false);
-
-  function playSound() {
-    ////...
-  }
-
-  const onMessage = useEffectEvent((receivedMessage) => {
-    setMessages((msgs) => [...msgs, receivedMessage]);
-    if (!isMuted) {
-      playSound();
-    }
-  });
-
-  const onMessaging = useEffectEvent((receivedMsg) => {
-    onReceivedMessages(receivedMsg); // event handler props
-  });
+export default function ChatRoom({ options }) {
+  const { serverUrl, roomId } = options;
 
   useEffect(() => {
-    const connection = createConnection();
-    connection.connect();
-    connection.on("message", (receivedMessage) => {
-      onMessage(receivedMessage);
-      onMessaging(receivedMessage);
+    const connection = createConnection({
+      serverUrl: serverUrl,
+      roomId: roomId,
     });
+    connection.connect();
     return () => connection.disconnect();
-  }, [createConnection, onMessage, roomId]); // ✅ All dependencies declared
-  // ...
+  }, [roomId, serverUrl]);
 
-  return <h1>Welcome to the {roomId} room!</h1>;
+  return <h1>Welcome to the {options.roomId} room!</h1>;
 }
