@@ -4,8 +4,9 @@ import { createConnection, sendMessage } from "./chat.js";
 import { showNotification } from "./notifications.js";
 
 const serverUrl = "https://localhost:1234";
+const roomId = "travel";
 
-function ChatRoom({ roomId, theme }) {
+function ChatRoom({ theme }) {
   const onConnected = useEffectEvent((connectedRoomId) => {
     showNotification("Welcome to " + connectedRoomId, theme);
   });
@@ -25,7 +26,7 @@ function ChatRoom({ roomId, theme }) {
         clearTimeout(notificationTimeoutId);
       }
     };
-  }, [roomId]);
+  }, []);
 
   return <h1>Welcome to the {roomId} room!</h1>;
 }
