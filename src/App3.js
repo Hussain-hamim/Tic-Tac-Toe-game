@@ -4,15 +4,14 @@ export default function Timer() {
   const [count, setCount] = useState(0);
   const [increment, setIncrement] = useState(1);
 
-  function onTick() {
-    setCount(count + increment);
-  }
-
   useEffect(() => {
+    function onTick() {
+      setCount(count + increment);
+    }
+
     const id = setInterval(onTick, 1000);
     return () => clearInterval(id);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [count, increment]); // remove the linter suppressing
 
   return (
     <>
