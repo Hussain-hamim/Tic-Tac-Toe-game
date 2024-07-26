@@ -3,15 +3,15 @@ import { createConnection } from "./chat.js";
 
 const serverUrl = "https://localhost:1234";
 
+const options = {
+  serverUrl: serverUrl,
+  roomId: "music",
+};
 function ChatRoom({ roomId }) {
   const [message, setMessage] = useState("");
 
   // Temporarily disable the linter to demonstrate the problem
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const options = {
-    serverUrl: serverUrl,
-    roomId: roomId,
-  };
 
   /** Object and function dependencies can make your
    * Effect re-synchronize more often than you need. */
@@ -20,7 +20,7 @@ function ChatRoom({ roomId }) {
     const connection = createConnection(options);
     connection.connect();
     return () => connection.disconnect();
-  }, [options]);
+  }, []);
 
   return (
     <>
