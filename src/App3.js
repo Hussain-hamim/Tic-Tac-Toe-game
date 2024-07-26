@@ -1,27 +1,19 @@
 import { useState, useEffect } from "react";
 import { createConnection } from "./chat.js";
 
-const serverUrl = "https://localhost:1234";
-
-function ChatRoom({ roomId }) {
+function ChatRoom({ options }) {
   const [message, setMessage] = useState("");
 
-  // Temporarily disable the linter to demonstrate the problem
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-
-  /** Object and function dependencies can make your
-   * Effect re-synchronize more often than you need. */
+  const { roomId, serverUrl } = options;
 
   useEffect(() => {
-    const options = {
-      serverUrl: serverUrl,
+    const connection = createConnection({
       roomId: roomId,
-    };
-
-    const connection = createConnection(options);
+      serverUrl: serverUrl,
+    });
     connection.connect();
     return () => connection.disconnect();
-  }, [roomId]);
+  }, [roomId, serverUrl]);
 
   return (
     <>
