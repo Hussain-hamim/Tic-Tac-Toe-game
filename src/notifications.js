@@ -1,5 +1,4 @@
 import { Toastify } from "toastify";
-
 import "toastify/dist/toastify.css";
 
 export function showNotification(message, theme) {

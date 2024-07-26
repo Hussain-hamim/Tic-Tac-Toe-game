@@ -1,31 +1,30 @@
 import { useState } from "react";
 import ChatRoom from "./ChatRoom.js";
-import "./App.css";
+import { showNotification } from "./notifications.js";
 
 export default function App() {
   const [isDark, setIsDark] = useState(false);
   const [roomId, setRoomId] = useState("general");
-  const [serverUrl, setServerUrl] = useState("https://localhost:1234");
-
-  const options = {
-    serverUrl: serverUrl,
-    roomId: roomId,
-  };
+  const [isEncrypted, setIsEncrypted] = useState(false);
 
   return (
-    <div className={isDark ? "dark" : "light"}>
-      <button onClick={() => setIsDark(!isDark)}>Toggle theme</button>
-      <br />
-      <br />
+    <>
       <label>
-        Server URL:{" "}
         <input
-          value={serverUrl}
-          onChange={(e) => setServerUrl(e.target.value)}
+          type="checkbox"
+          checked={isDark}
+          onChange={(e) => setIsDark(e.target.checked)}
         />
+        Use dark theme
       </label>
-      <hr />
-      <br />
+      <label>
+        <input
+          type="checkbox"
+          checked={isEncrypted}
+          onChange={(e) => setIsEncrypted(e.target.checked)}
+        />
+        Enable encryption
+      </label>
       <label>
         Choose the chat room:{" "}
         <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
@@ -35,7 +34,13 @@ export default function App() {
         </select>
       </label>
       <hr />
-      <ChatRoom options={options} />
-    </div>
+      <ChatRoom
+        roomId={roomId}
+        isEncrypted={isEncrypted}
+        onMessage={(msg) => {
+          showNotification("New message: " + msg, isDark ? "dark" : "light");
+        }}
+      />
+    </>
   );
 }
