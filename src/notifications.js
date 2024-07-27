@@ -1,7 +1,7 @@
-import { Toastify } from "toastify";
-import "toastify/dist/toastify.css";
+import Toastify from "toastify-js";
+import "toastify-js/src/toastify.css";
 
-export function showNotification(message, theme) {
+export function showNotification(message, theme = "dark") {
   Toastify({
     text: message,
     duration: 2000,

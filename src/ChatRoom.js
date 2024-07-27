@@ -1,33 +1,28 @@
-import {
-  useEffect,
-  experimental_useEffectEvent as useEffectEvent,
-} from "react";
-import {
-  createEncryptedConnection,
-  createUnencryptedConnection,
-} from "./chat.js";
+import { useState } from "react";
+import { useChatRoom } from "./useChatRoom.js";
+import { showNotification } from "./notifications.js";
 
-export default function ChatRoom({ roomId, isEncrypted, onMessage }) {
-  const onReceiveMessage = useEffectEvent(onMessage);
+export default function ChatRoom({ roomId }) {
+  const [serverUrl, setServerUrl] = useState("https://localhost:1234");
 
-  useEffect(() => {
-    function createConnection() {
-      const options = {
-        serverUrl: "https://localhost:1234",
-        roomId: roomId,
-      };
-      if (isEncrypted) {
-        return createEncryptedConnection(options);
-      } else {
-        return createUnencryptedConnection(options);
-      }
-    }
+  useChatRoom({
+    roomId: roomId,
+    serverUrl: serverUrl,
+    onReceiveMessage(msg) {
+      showNotification("New message: " + msg);
+    },
+  });
 
-    const connection = createConnection();
-    connection.on("message", (msg) => onReceiveMessage(msg));
-    connection.connect();
-    return () => connection.disconnect();
-  }, [roomId, isEncrypted]);
-
-  return <h1>Welcome to the {roomId} room!</h1>;
+  return (
+    <>
+      <label>
+        Server URL:
+        <input
+          value={serverUrl}
+          onChange={(e) => setServerUrl(e.target.value)}
+        />
+      </label>
+      <h1>Welcome to the {roomId} room!</h1>
+    </>
+  );
 }

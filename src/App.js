@@ -1,28 +1,20 @@
-import { useFormInput } from "./useFormInput";
+import { useState } from "react";
+import ChatRoom from "./ChatRoom.js";
 
-export default function Form() {
-  const firstNameProps = useFormInput("Hussain");
-  const lastNameProps = useFormInput("Hamim");
-
-  /** Custom Hooks let you share stateful logic but not state
-   *  itself. Each call to a Hook is completely independent
-   * from every other call to the same Hook.  */
-
+export default function App() {
+  const [roomId, setRoomId] = useState("general");
   return (
     <>
       <label>
-        First name:
-        <input {...firstNameProps} />
+        Choose the chat room:{" "}
+        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
+          <option value="general">general</option>
+          <option value="travel">travel</option>
+          <option value="music">music</option>
+        </select>
       </label>
-      <label>
-        Last name:
-        <input {...lastNameProps} />
-      </label>
-      <p>
-        <b>
-          Good morning, {firstNameProps.value} {lastNameProps.value}.
-        </b>
-      </p>
+      <hr />
+      <ChatRoom roomId={roomId} />
     </>
   );
 }
