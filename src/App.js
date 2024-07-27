@@ -1,29 +1,28 @@
-import { useOnlineStatus } from "./useOnlineStatus.js";
+import { useFormInput } from "./useFormInput";
 
-function StatusBar() {
-  const isOnline = useOnlineStatus();
-  return <h1>{isOnline ? "✅ Online" : "❌ Disconnected"}</h1>;
-}
+export default function Form() {
+  const firstNameProps = useFormInput("Hussain");
+  const lastNameProps = useFormInput("Hamim");
 
-function SaveButton() {
-  const isOnline = useOnlineStatus();
+  /** Custom Hooks let you share stateful logic but not state
+   *  itself. Each call to a Hook is completely independent
+   * from every other call to the same Hook.  */
 
-  function handleSaveClick() {
-    console.log("✅ Progress saved");
-  }
-
-  return (
-    <button disabled={!isOnline} onClick={handleSaveClick}>
-      {isOnline ? "Save progress" : "Reconnecting..."}
-    </button>
-  );
-}
-
-export default function App() {
   return (
     <>
-      <SaveButton />
-      <StatusBar />
+      <label>
+        First name:
+        <input {...firstNameProps} />
+      </label>
+      <label>
+        Last name:
+        <input {...lastNameProps} />
+      </label>
+      <p>
+        <b>
+          Good morning, {firstNameProps.value} {lastNameProps.value}.
+        </b>
+      </p>
     </>
   );
 }
