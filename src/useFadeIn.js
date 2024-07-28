@@ -1,25 +1,36 @@
-import { useState, useEffect, useRef } from "react";
-import { useFadeIn } from "./useFadeIn.js";
+import { useState, useEffect } from "react";
+import { experimental_useEffectEvent as useEffectEvent } from "react";
 
-function Welcome() {
-  const ref = useRef(null);
+export function useFadeIn(ref, duration) {
+  const [isRunning, setIsRunning] = useState(true);
 
-  useFadeIn(ref, 1000);
-
-  return (
-    <h1 className="welcome" ref={ref}>
-      Welcome
-    </h1>
-  );
+  useAnimationLoop(isRunning, (timePassed) => {
+    const progress = Math.min(timePassed / duration, 1);
+    ref.current.style.opacity = progress;
+    if (progress === 1) {
+      setIsRunning(false);
+    }
+  });
 }
 
-export default function App() {
-  const [show, setShow] = useState(false);
-  return (
-    <>
-      <button onClick={() => setShow(!show)}>{show ? "Remove" : "Show"}</button>
-      <hr />
-      {show && <Welcome />}
-    </>
-  );
+function useAnimationLoop(isRunning, drawFrame) {
+  const onFrame = useEffectEvent(drawFrame);
+
+  useEffect(() => {
+    if (!isRunning) {
+      return;
+    }
+
+    const startTime = performance.now();
+    let frameId = null;
+
+    function tick(now) {
+      const timePassed = now - startTime;
+      onFrame(timePassed);
+      frameId = requestAnimationFrame(tick);
+    }
+
+    tick();
+    return () => cancelAnimationFrame(frameId);
+  }, [isRunning]);
 }
