@@ -1,13 +1,42 @@
-import { useCounter } from "./useCounter.js";
-import { useInterval } from "./useInterval.js";
+import { usePointerPosition } from "./usePointerPosition.js";
 
-export default function Counter() {
-  const count = useCounter(1000);
+function useDelayedValue(value, delay) {
+  // TODO: Implement this Hookra
+  return value;
+}
 
-  useInterval(() => {
-    const randomColor = `hsla(${Math.random() * 360}, 100%, 50%, 0.2)`;
-    document.body.style.backgroundColor = randomColor;
-  }, 2000);
+export default function Canvas() {
+  const pos1 = usePointerPosition();
+  const pos2 = useDelayedValue(pos1, 100);
+  const pos3 = useDelayedValue(pos2, 200);
+  const pos4 = useDelayedValue(pos3, 100);
+  const pos5 = useDelayedValue(pos3, 50);
+  return (
+    <>
+      <Dot position={pos1} opacity={1} />
+      <Dot position={pos2} opacity={0.8} />
+      <Dot position={pos3} opacity={0.6} />
+      <Dot position={pos4} opacity={0.4} />
+      <Dot position={pos5} opacity={0.2} />
+    </>
+  );
+}
 
-  return <h1>Seconds passed: {count}</h1>;
+function Dot({ position, opacity }) {
+  return (
+    <div
+      style={{
+        position: "absolute",
+        backgroundColor: "pink",
+        borderRadius: "50%",
+        opacity,
+        transform: `translate(${position.x}px, ${position.y}px)`,
+        pointerEvents: "none",
+        left: -20,
+        top: -20,
+        width: 40,
+        height: 40,
+      }}
+    />
+  );
 }
