@@ -1,8 +1,17 @@
+import { useEffect, useState } from "react";
 import { usePointerPosition } from "./usePointerPosition.js";
 
 function useDelayedValue(value, delay) {
-  // TODO: Implement this Hookra
-  return value;
+  // TODO: Implement this Hook
+  const [delayedValue, setDelayedValue] = useState(value);
+
+  useEffect(() => {
+    setTimeout(() => {
+      setDelayedValue(value);
+    }, delay);
+  }, [delay, value]);
+
+  return delayedValue;
 }
 
 export default function Canvas() {
