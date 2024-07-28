@@ -1,17 +1,15 @@
-import { useState, useEffect, useRef } from "react";
-import "./welcome.css";
+import { useState, useEffect } from "react";
 
-function Welcome() {
-  return <h1 className="welcome">Welcome</h1>;
-}
+export default function Counter() {
+  const [count, setCount] = useState(0);
 
-export default function App() {
-  const [show, setShow] = useState(false);
-  return (
-    <>
-      <button onClick={() => setShow(!show)}>{show ? "Remove" : "Show"}</button>
-      <hr />
-      {show && <Welcome />}
-    </>
-  );
+  useEffect(() => {
+    const id = setInterval(() => {
+      setCount((c) => c + 1);
+    }, 1000);
+
+    return () => clearInterval(id);
+  }, []);
+
+  return <h1>Seconds passed: {count}</h1>;
 }
