@@ -2,16 +2,16 @@
 
 import { useEffect, useState } from "react";
 
-export function useCounter() {
+export function useCounter(delay) {
   const [count, setCount] = useState(0);
 
   useEffect(() => {
     const id = setInterval(() => {
       setCount((c) => c + 1);
-    }, 1000);
+    }, delay);
 
     return () => clearInterval(id);
-  }, []);
+  }, [delay]);
 
   return count;
 }
