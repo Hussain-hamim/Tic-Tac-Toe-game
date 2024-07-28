@@ -1,26 +1,13 @@
-import { useState } from "react";
-import { useCounter } from "./useCounter";
+import { useCounter } from "./useCounter.js";
+import { useInterval } from "./useInterval.js";
 
 export default function Counter() {
-  const [delay, setDelay] = useState(1000);
-  const count = useCounter(delay);
+  const count = useCounter(1000);
 
-  return (
-    <>
-      <label>
-        Tick Duration: {delay} ms
-        <br />
-        <input
-          type="range"
-          value={delay}
-          min={10}
-          max={2000}
-          onChange={(e) => setDelay(Number(e.target.value))}
-        />
-      </label>
+  useInterval(() => {
+    const randomColor = `hsla(${Math.random() * 360}, 100%, 50%, 0.2)`;
+    document.body.style.backgroundColor = randomColor;
+  }, 2000);
 
-      <hr />
-      <h1>Seconds passed: {count}</h1>
-    </>
-  );
+  return <h1>Seconds passed: {count}</h1>;
 }
