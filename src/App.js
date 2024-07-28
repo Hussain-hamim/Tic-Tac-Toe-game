@@ -1,20 +1,29 @@
-import { useState } from "react";
-import ChatRoom from "./ChatRoom.js";
+import { useOnlineStatus } from "./useOnlineStatus.js";
+
+function StatusBar() {
+  const isOnline = useOnlineStatus();
+  return <h1>{isOnline ? "✅ Online" : "❌ Disconnected"}</h1>;
+}
+
+function SaveButton() {
+  const isOnline = useOnlineStatus();
+
+  function handleSaveClick() {
+    console.log("✅ Progress saved");
+  }
+
+  return (
+    <button disabled={!isOnline} onClick={handleSaveClick}>
+      {isOnline ? "Save progress" : "Reconnecting..."}
+    </button>
+  );
+}
 
 export default function App() {
-  const [roomId, setRoomId] = useState("general");
   return (
     <>
-      <label>
-        Choose the chat room:{" "}
-        <select value={roomId} onChange={(e) => setRoomId(e.target.value)}>
-          <option value="general">general</option>
-          <option value="travel">travel</option>
-          <option value="music">music</option>
-        </select>
-      </label>
-      <hr />
-      <ChatRoom roomId={roomId} />
+      <SaveButton />
+      <StatusBar />
     </>
   );
 }
