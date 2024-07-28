@@ -1,29 +1,17 @@
-import { useOnlineStatus } from "./useOnlineStatus.js";
+import { useState, useEffect, useRef } from "react";
+import "./welcome.css";
 
-function StatusBar() {
-  const isOnline = useOnlineStatus();
-  return <h1>{isOnline ? "✅ Online" : "❌ Disconnected"}</h1>;
-}
-
-function SaveButton() {
-  const isOnline = useOnlineStatus();
-
-  function handleSaveClick() {
-    console.log("✅ Progress saved");
-  }
-
-  return (
-    <button disabled={!isOnline} onClick={handleSaveClick}>
-      {isOnline ? "Save progress" : "Reconnecting..."}
-    </button>
-  );
+function Welcome() {
+  return <h1 className="welcome">Welcome</h1>;
 }
 
 export default function App() {
+  const [show, setShow] = useState(false);
   return (
     <>
-      <SaveButton />
-      <StatusBar />
+      <button onClick={() => setShow(!show)}>{show ? "Remove" : "Show"}</button>
+      <hr />
+      {show && <Welcome />}
     </>
   );
 }
