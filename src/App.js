@@ -16,10 +16,12 @@ function useDelayedValue(value, delay) {
 
 export default function Canvas() {
   const pos1 = usePointerPosition();
+
   const pos2 = useDelayedValue(pos1, 100);
   const pos3 = useDelayedValue(pos2, 200);
   const pos4 = useDelayedValue(pos3, 100);
   const pos5 = useDelayedValue(pos3, 50);
+
   return (
     <>
       <Dot position={pos1} opacity={1} />
